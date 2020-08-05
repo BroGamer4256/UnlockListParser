@@ -1,1 +1,1 @@
-hex reading
+Unlock List parser for diva F
