@@ -7,11 +7,41 @@ using System.Xml.Serialization;
 
 public class HexWrite
 {
+    public static int VocaRoomUnlockTblSize;
+
     public static void Write()
     {
+        Writer();
         CMNData();
         VocaData();
-        Writer();
+
+        HeaderData();
+    }
+
+    public static void HeaderData()
+    {
+        string dummy = VocaRoomUnlockTblSize.ToString("X");
+        dummy = dummy.PadLeft(8, '0');
+        string[] dummyA = {dummy.Substring(6,2), dummy.Substring(4,2), dummy.Substring(2,2), dummy.Substring(0,2)};
+
+        var BWriter = new BinaryWriter(File.OpenWrite(@"unlock_list.bin"));
+        var HeaderData = new List<byte>();
+
+        for (int i = 0; i < dummyA.Length; i++)
+        {
+            byte[] tempByte = HexRead.StringToByteArray(dummyA[i]);
+			for (int i2 = 0; i2 < tempByte.Length; i2++)
+			{
+				HeaderData.Add(tempByte[i2]);
+			}
+        }
+
+        BWriter.Seek(16+8, SeekOrigin.Begin);
+        for (int i = 0; i < HeaderData.Count; i++)
+		{
+			BWriter.Write(HeaderData[i]);
+		}
+		BWriter.Close();
     }
 
     public static void Writer()
@@ -20,7 +50,7 @@ public class HexWrite
             File.Create(@"unlock_list.bin");
         GC.Collect();
 		GC.WaitForPendingFinalizers();
-        
+
 		var OverflowData = new List<byte>();
 		var fs = new FileStream(@"unlock_list\\rawInfo.hex", FileMode.Open);
 		var BWriter = new BinaryWriter(File.OpenWrite(@"unlock_list.bin"));
@@ -69,6 +99,7 @@ public class HexWrite
 			};
             VocaRoomReadData.Add(TBA);
 		}
+        VocaRoomUnlockTblSize = VocaRoomReadNode.Count;
     }
 
     public static void CMNData()
