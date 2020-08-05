@@ -1,1 +1,1 @@
-mcs Program.cs Structs.cs Stolen.cs Writing.cs
+mcs Program.cs Structs.cs XmlFix.cs Writing.cs
