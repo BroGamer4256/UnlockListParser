@@ -11,6 +11,10 @@ public class HexWrite
     {
         CMNData();
     }
+    public static void VocaData()
+    {
+        
+    }
     public static void CMNData()
     {
         var doc = new XmlDocument();
