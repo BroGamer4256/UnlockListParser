@@ -8,6 +8,11 @@ using System.Xml.Serialization;
 public class HexWrite
 {
     public static int VocaRoomUnlockTblSize;
+    public static int VocaRoomUnlockTblHexSize;
+	public static int VocaRoomUnlockTblOffset;
+    public static int CMNDataUnlockTblSize;
+    public static int CMNDataUnlockTblHexSize;
+	public static int CMNDataUnlockTblOffset;
 
     public static void Write()
     {
@@ -18,25 +23,39 @@ public class HexWrite
         HeaderData();
     }
 
-    public static void HeaderData()
+    public static string[] IntToHex(int bitch)
     {
-        string dummy = VocaRoomUnlockTblSize.ToString("X");
+        string dummy = bitch.ToString("X");
         dummy = dummy.PadLeft(8, '0');
         string[] dummyA = {dummy.Substring(6,2), dummy.Substring(4,2), dummy.Substring(2,2), dummy.Substring(0,2)};
+		return dummyA;
+    }
+
+    public static void HeaderData()
+    {
+        GC.Collect();
+		GC.WaitForPendingFinalizers();
 
         var BWriter = new BinaryWriter(File.OpenWrite(@"unlock_list.bin"));
         var HeaderData = new List<byte>();
+		var intList = new List<int>();
 
-        for (int i = 0; i < dummyA.Length; i++)
-        {
-            byte[] tempByte = HexRead.StringToByteArray(dummyA[i]);
-			for (int i2 = 0; i2 < tempByte.Length; i2++)
-			{
-				HeaderData.Add(tempByte[i2]);
-			}
-        }
+		intList.Add(VocaRoomUnlockTblSize);
+		intList.Add(CMNDataUnlockTblSize);
 
-        BWriter.Seek(16+8, SeekOrigin.Begin);
+		foreach (int item in intList)
+		{
+        	string[] dummyA = IntToHex(item);
+        	for (int i = 0; i < dummyA.Length; i++)
+        	{
+            	byte[] tempByte = HexRead.StringToByteArray(dummyA[i]);
+				for (int i2 = 0; i2 < tempByte.Length; i2++)
+				{
+					HeaderData.Add(tempByte[i2]);
+				}
+        	}
+		}
+
         for (int i = 0; i < HeaderData.Count; i++)
 		{
 			BWriter.Write(HeaderData[i]);
@@ -100,6 +119,7 @@ public class HexWrite
             VocaRoomReadData.Add(TBA);
 		}
         VocaRoomUnlockTblSize = VocaRoomReadNode.Count;
+        VocaRoomUnlockTblHexSize = HexRead.EntryLength("VocaRoomUnlock")*(VocaRoomUnlockTblSize*4);
     }
 
     public static void CMNData()
@@ -135,5 +155,7 @@ public class HexWrite
 			};
             CMNReadData.Add(TBA);
 		}
+        CMNDataUnlockTblSize = CMNReadNode.Count;
+        CMNDataUnlockTblHexSize = HexRead.EntryLength("CMNITMUnlock")*(CMNDataUnlockTblSize*4);
     }
 }
