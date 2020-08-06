@@ -62,7 +62,6 @@ public class HexWrite
 			{
 				foreach (string item4 in item3)
 				{
-					Console.WriteLine(item4);
 					fuckingbitch.Add(item4);
 				}
 			}
@@ -103,6 +102,17 @@ public class HexWrite
 			{
 				case "ModuleUnlockEntry":
 					ModuleUnlockWriteData.Add(IntToHex(item.ModuleID));
+					ModuleUnlockWriteData.Add(IntToHex(item.muUnk01));
+					ModuleUnlockWriteData.Add(IntToHex(item.muPvPID));
+					ModuleUnlockWriteData.Add(IntToHex(item.muSCC));
+					ModuleUnlockWriteData.Add(IntToHex(item.muUnk02));
+					ModuleUnlockWriteData.Add(IntToHex(item.muDiffClr));
+					ModuleUnlockWriteData.Add(IntToHex(item.muRankClr));
+					ModuleUnlockWriteData.Add(IntToHex(item.muUnk05));
+					ModuleUnlockWriteData.Add(IntToHex(item.muTCC));
+					ModuleUnlockWriteData.Add(IntToHex(item.muUnk07));
+					ModuleUnlockWriteData.Add(IntToHex(item.muUnk08));
+					ModuleUnlockWriteData.Add(IntToHex(item.muUnk09));
 					break;
 				case "PvUnlockEntry":
 
