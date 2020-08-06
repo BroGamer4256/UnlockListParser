@@ -10,6 +10,9 @@ public class HexWrite
 	public static int ModuleUnlockTblSize;
 	public static int ModuleUnlockTblHexSize;
 	public static int ModuleUnlockTblOffset;
+	public static int PVUnlockTblSize;
+	public static int PVUnlockTblHexSize;
+	public static int PVUnlockTblOffset;
     public static int CMNDataUnlockTblSize;
     public static int CMNDataUnlockTblHexSize;
 	public static int CMNDataUnlockTblOffset;
@@ -23,6 +26,7 @@ public class HexWrite
             File.Create(@"unlock_list.bin");
         //Writer();
 		ModuleData();
+		PVData();
         CMNData();
         VocaData();
 
@@ -46,12 +50,15 @@ public class HexWrite
         var HeaderData = new List<byte>();
 		var intList = new List<int>();
 
-		ModuleUnlockTblOffset = 128;
-		CMNDataUnlockTblOffset = ModuleUnlockTblOffset + ModuleUnlockTblHexSize;
+		ModuleUnlockTblOffset = 120;
+		PVUnlockTblOffset = ModuleUnlockTblOffset + ModuleUnlockTblHexSize;
+		CMNDataUnlockTblOffset = PVUnlockTblOffset + PVUnlockTblHexSize;
 		VocaRoomUnlockTblOffset = CMNDataUnlockTblOffset + CMNDataUnlockTblHexSize;
 
 		intList.Add(ModuleUnlockTblSize);
 		intList.Add(ModuleUnlockTblOffset);
+		intList.Add(PVUnlockTblSize);
+		intList.Add(PVUnlockTblOffset);
 		intList.Add(CMNDataUnlockTblSize);
 		intList.Add(CMNDataUnlockTblOffset);
 		intList.Add(VocaRoomUnlockTblSize);
@@ -76,6 +83,49 @@ public class HexWrite
 		}
 		BWriter.Close();
     }
+
+	public static void PVData()
+	{
+		var doc = new XmlDocument();
+		doc.Load(@"unlock_list\\PVUnlock.xml");
+        var PVUnlockReadNode = new List<dynamic>();
+		var PVUnlockReadData = new List<dynamic>();
+		foreach (var node in doc.DocumentElement.ChildNodes)
+		{
+			PVUnlockReadNode.Add(node);
+		}
+        string[] xmlData = {};
+        for (int i = 0; i < PVUnlockReadNode.Count; i++)
+		{
+			Array.Resize(ref xmlData, xmlData.Length + 1);
+			xmlData[i] = PVUnlockReadNode[i].InnerXml;
+			string[] xmlDataSplit = xmlData[i].Split(new string[] { "<", "/<", ">" }, StringSplitOptions.None);
+            var TBA = new PvUnlockEntry() 
+			{
+				suPVID = Convert.ToInt32(xmlDataSplit[2]),
+				suUnk01 = Convert.ToInt32(xmlDataSplit[6]),
+				suPVClr01 = Convert.ToInt32(xmlDataSplit[10]),
+				suPVClr02 = Convert.ToInt32(xmlDataSplit[14]),
+				suPVClr03 = Convert.ToInt32(xmlDataSplit[18]),
+				suPVClr04 = Convert.ToInt32(xmlDataSplit[22]),
+				suPVClr05 = Convert.ToInt32(xmlDataSplit[26]),
+				suPVClrDiff = Convert.ToInt32(xmlDataSplit[30]),
+				suPVClrRank = Convert.ToInt32(xmlDataSplit[34]),
+				suUnk02 = Convert.ToInt32(xmlDataSplit[38]),
+				suUnk03 = Convert.ToInt32(xmlDataSplit[42]),
+				suUnk04 = Convert.ToInt32(xmlDataSplit[46]),
+				suUnk05 = Convert.ToInt32(xmlDataSplit[50]),
+				suUnk06 = Convert.ToInt32(xmlDataSplit[54]),
+				suUnk07 = Convert.ToInt32(xmlDataSplit[58]),
+				suPVHighClrDiff = Convert.ToInt32(xmlDataSplit[62]),
+				suPVHighClrRank = Convert.ToInt32(xmlDataSplit[66]),
+				suUnk08 = Convert.ToInt32(xmlDataSplit[70])
+			};
+            PVUnlockReadData.Add(TBA);
+		}
+        PVUnlockTblSize = PVUnlockReadNode.Count;
+        PVUnlockTblHexSize = HexRead.EntryLength("PVUnlock")*(PVUnlockTblSize*4);
+	}
 
 	public static void ModuleData()
 	{
