@@ -7,16 +7,22 @@ using System.Xml.Serialization;
 
 public class HexWrite
 {
-    public static int VocaRoomUnlockTblSize;
-    public static int VocaRoomUnlockTblHexSize;
-	public static int VocaRoomUnlockTblOffset;
+	public static int ModuleUnlockTblSize;
+	public static int ModuleUnlockTblHexSize;
+	public static int ModuleUnlockTblOffset;
     public static int CMNDataUnlockTblSize;
     public static int CMNDataUnlockTblHexSize;
 	public static int CMNDataUnlockTblOffset;
+	public static int VocaRoomUnlockTblSize;
+    public static int VocaRoomUnlockTblHexSize;
+	public static int VocaRoomUnlockTblOffset;
 
     public static void Write()
     {
-        Writer();
+		if(!File.Exists(@"unlock_list.bin"))
+            File.Create(@"unlock_list.bin");
+        //Writer();
+		ModuleData();
         CMNData();
         VocaData();
 
@@ -40,8 +46,16 @@ public class HexWrite
         var HeaderData = new List<byte>();
 		var intList = new List<int>();
 
-		intList.Add(VocaRoomUnlockTblSize);
+		ModuleUnlockTblOffset = 128;
+		CMNDataUnlockTblOffset = ModuleUnlockTblOffset + ModuleUnlockTblHexSize;
+		VocaRoomUnlockTblOffset = CMNDataUnlockTblOffset + CMNDataUnlockTblHexSize;
+
+		intList.Add(ModuleUnlockTblSize);
+		intList.Add(ModuleUnlockTblOffset);
 		intList.Add(CMNDataUnlockTblSize);
+		intList.Add(CMNDataUnlockTblOffset);
+		intList.Add(VocaRoomUnlockTblSize);
+		intList.Add(VocaRoomUnlockTblOffset);
 
 		foreach (int item in intList)
 		{
@@ -63,10 +77,45 @@ public class HexWrite
 		BWriter.Close();
     }
 
+	public static void ModuleData()
+	{
+		var doc = new XmlDocument();
+		doc.Load(@"unlock_list\\ModuleUnlock.xml");
+        var ModuleUnlockReadNode = new List<dynamic>();
+		var ModuleUnlockReadData = new List<dynamic>();
+		foreach (var node in doc.DocumentElement.ChildNodes)
+		{
+			ModuleUnlockReadNode.Add(node);
+		}
+        string[] xmlData = {};
+        for (int i = 0; i < ModuleUnlockReadNode.Count; i++)
+		{
+			Array.Resize(ref xmlData, xmlData.Length + 1);
+			xmlData[i] = ModuleUnlockReadNode[i].InnerXml;
+			string[] xmlDataSplit = xmlData[i].Split(new string[] { "<", "/<", ">" }, StringSplitOptions.None);
+            var TBA = new ModuleUnlockEntry() 
+			{
+				ModuleID = Convert.ToInt32(xmlDataSplit[2]),
+				muUnk01 = Convert.ToInt32(xmlDataSplit[6]),
+				muPvPID = Convert.ToInt32(xmlDataSplit[10]),
+				muSCC = Convert.ToInt32(xmlDataSplit[14]),
+				muUnk02 = Convert.ToInt32(xmlDataSplit[18]),
+				muDiffClr = Convert.ToInt32(xmlDataSplit[22]),
+				muRankClr = Convert.ToInt32(xmlDataSplit[26]),
+				muUnk05 = Convert.ToInt32(xmlDataSplit[30]),
+				muTCC = Convert.ToInt32(xmlDataSplit[34]),
+				muUnk07 = Convert.ToInt32(xmlDataSplit[38]),
+				muUnk08 = Convert.ToInt32(xmlDataSplit[42]),
+				muUnk09 = Convert.ToInt32(xmlDataSplit[46])
+			};
+            ModuleUnlockReadData.Add(TBA);
+		}
+        ModuleUnlockTblSize = ModuleUnlockReadNode.Count;
+        ModuleUnlockTblHexSize = HexRead.EntryLength("ModuleUnlock")*(ModuleUnlockTblSize*4);
+	}
+
     public static void Writer()
     {
-        if(!File.Exists(@"unlock_list.bin"))
-            File.Create(@"unlock_list.bin");
         GC.Collect();
 		GC.WaitForPendingFinalizers();
 
