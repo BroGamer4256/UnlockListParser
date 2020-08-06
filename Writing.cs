@@ -10,15 +10,23 @@ public class HexWrite
 	public static int ModuleUnlockTblSize;
 	public static int ModuleUnlockTblHexSize;
 	public static int ModuleUnlockTblOffset;
+	public static List<dynamic> ModuleUnlockReadData = new List<dynamic>();
+	public static List<dynamic> ModuleUnlockWriteData = new List<dynamic>();
 	public static int PVUnlockTblSize;
 	public static int PVUnlockTblHexSize;
 	public static int PVUnlockTblOffset;
+	public static List<dynamic> PVUnlockReadData = new List<dynamic>();
+	public static List<dynamic> PVUnlockWriteData = new List<dynamic>();
     public static int CMNDataUnlockTblSize;
     public static int CMNDataUnlockTblHexSize;
 	public static int CMNDataUnlockTblOffset;
+	public static List<dynamic> CMNReadData = new List<dynamic>();
+	public static List<dynamic> CMNWriteData = new List<dynamic>();
 	public static int VocaRoomUnlockTblSize;
     public static int VocaRoomUnlockTblHexSize;
 	public static int VocaRoomUnlockTblOffset;
+	public static List<dynamic> VocaRoomReadData = new List<dynamic>();
+	public static List<dynamic> VocaRoomWriteData = new List<dynamic>();
 
     public static void Write()
     {
@@ -31,7 +39,51 @@ public class HexWrite
         VocaData();
 
         HeaderData();
+		MainData();
     }
+
+	public static void MainData()
+	{
+		var MainData = new List<byte>();
+		var DataList = new List<dynamic>();
+		
+		DataList.Add(ModuleUnlockReadData);
+		DataList.Add(PVUnlockReadData);
+		DataList.Add(CMNReadData);
+		DataList.Add(VocaRoomReadData);
+
+		foreach (var item in DataList)
+		{
+        	IntToHex(item);
+			var fuckingbitch = new List<string>();
+			var BWriter = new BinaryWriter(File.OpenWrite(@"unlock_list.bin"));
+
+			foreach (string[] item3 in ModuleUnlockWriteData.ToArray())
+			{
+				foreach (string item4 in item3)
+				{
+					Console.WriteLine(item4);
+					fuckingbitch.Add(item4);
+				}
+			}
+			string[] dummyA = fuckingbitch.ToArray();
+        	for (int i = 0; i < dummyA.Length; i++)
+        	{
+            	byte[] tempByte = HexRead.StringToByteArray(dummyA[i]);
+				for (int i2 = 0; i2 < tempByte.Length; i2++)
+				{
+					MainData.Add(tempByte[i2]);
+				}
+        	}
+
+			BWriter.Seek(ModuleUnlockTblOffset, SeekOrigin.Begin);
+			for (int i = 0; i < MainData.Count; i++)
+			{
+				BWriter.Write(MainData[i]);
+			}
+			BWriter.Close();
+		}
+	}
 
     public static string[] IntToHex(int bitch)
     {
@@ -40,6 +92,31 @@ public class HexWrite
         string[] dummyA = {dummy.Substring(6,2), dummy.Substring(4,2), dummy.Substring(2,2), dummy.Substring(0,2)};
 		return dummyA;
     }
+
+	public static string[] IntToHex(List<dynamic> fucker)
+	{
+		string[] items = {};
+		foreach (var item in fucker)
+		{
+			string dummy = Convert.ToString(item.GetType());
+			switch (dummy)
+			{
+				case "ModuleUnlockEntry":
+					ModuleUnlockWriteData.Add(IntToHex(item.ModuleID));
+					break;
+				case "PvUnlockEntry":
+
+					break;
+				case "CmnUnlock":
+
+					break;
+				case "VocaRoomUnlock":
+
+					break;
+			}
+		}
+		return items;
+	}
 
     public static void HeaderData()
     {
@@ -89,7 +166,6 @@ public class HexWrite
 		var doc = new XmlDocument();
 		doc.Load(@"unlock_list\\PVUnlock.xml");
         var PVUnlockReadNode = new List<dynamic>();
-		var PVUnlockReadData = new List<dynamic>();
 		foreach (var node in doc.DocumentElement.ChildNodes)
 		{
 			PVUnlockReadNode.Add(node);
@@ -132,7 +208,6 @@ public class HexWrite
 		var doc = new XmlDocument();
 		doc.Load(@"unlock_list\\ModuleUnlock.xml");
         var ModuleUnlockReadNode = new List<dynamic>();
-		var ModuleUnlockReadData = new List<dynamic>();
 		foreach (var node in doc.DocumentElement.ChildNodes)
 		{
 			ModuleUnlockReadNode.Add(node);
@@ -198,7 +273,6 @@ public class HexWrite
         var doc = new XmlDocument();
 		doc.Load(@"unlock_list\\VocaRoomUnlock.xml");
         var VocaRoomReadNode = new List<dynamic>();
-		var VocaRoomReadData = new List<dynamic>();
 		foreach (var node in doc.DocumentElement.ChildNodes)
 		{
 			VocaRoomReadNode.Add(node);
@@ -226,7 +300,6 @@ public class HexWrite
         var doc = new XmlDocument();
 		doc.Load(@"unlock_list\\CMNITMUnlock.xml");
 		var CMNReadNode = new List<dynamic>();
-		var CMNReadData = new List<dynamic>();
 		foreach (var node in doc.DocumentElement.ChildNodes)
 		{
 			CMNReadNode.Add(node);
