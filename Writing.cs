@@ -30,8 +30,8 @@ public class HexWrite
 
     public static void Write()
     {
-		if(!File.Exists(@"unlock_list.bin"))
-            File.Create(@"unlock_list.bin");
+		if(!File.Exists(@"unlock_list_new.bin"))
+            File.Create(@"unlock_list_new.bin");
         //Writer();
 		ModuleData();
 		PVData();
@@ -56,7 +56,7 @@ public class HexWrite
 			var MainData = new List<byte>();
         	IntToHex(item);
 			var fuckingbitch = new List<string>();
-			var BWriter = new BinaryWriter(File.OpenWrite(@"unlock_list.bin"));
+			var BWriter = new BinaryWriter(File.OpenWrite(@"unlock_list_new.bin"));
 
 			foreach (string[] item3 in ModuleUnlockWriteData.ToArray())
 			{
@@ -191,7 +191,7 @@ public class HexWrite
         GC.Collect();
 		GC.WaitForPendingFinalizers();
 
-        var BWriter = new BinaryWriter(File.OpenWrite(@"unlock_list.bin"));
+        var BWriter = new BinaryWriter(File.OpenWrite(@"unlock_list_new.bin"));
         var HeaderData = new List<byte>();
 		var intList = new List<int>();
 
@@ -314,7 +314,7 @@ public class HexWrite
 
 		var OverflowData = new List<byte>();
 		var fs = new FileStream(@"unlock_list\\rawInfo.hex", FileMode.Open);
-		var BWriter = new BinaryWriter(File.OpenWrite(@"unlock_list.bin"));
+		var BWriter = new BinaryWriter(File.OpenWrite(@"unlock_list_new.bin"));
 		var info = new FileInfo(@"unlock_list\\rawInfo.hex");
 
 		fs.Seek(0, SeekOrigin.Begin);

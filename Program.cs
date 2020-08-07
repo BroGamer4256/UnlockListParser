@@ -14,7 +14,7 @@ public class HexRead
 			HexWrite.Write();
 			Environment.Exit(0);
 		}
-		if (!args[0].EndsWith("unlock_list.bin"))
+		if (!args[0].EndsWith("unlock_list.bin") || !args[0].EndsWith("unlock_list_new.bin"))
 			throw new Exception("Not unlock_list.bin");
 		if (Directory.Exists("unlock_list"))
 		{
