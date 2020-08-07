@@ -65,6 +65,31 @@ public class HexWrite
 					fuckingbitch.Add(item4);
 				}
 			}
+
+			foreach (string[] item3 in PVUnlockWriteData.ToArray())
+			{
+				foreach (string item4 in item3)
+				{
+					fuckingbitch.Add(item4);
+				}
+			}
+
+			foreach (string[] item3 in CMNWriteData.ToArray())
+			{
+				foreach (string item4 in item3)
+				{
+					fuckingbitch.Add(item4);
+				}
+			}
+
+			foreach (string[] item3 in VocaRoomWriteData.ToArray())
+			{
+				foreach (string item4 in item3)
+				{
+					fuckingbitch.Add(item4);
+				}
+			}
+
 			string[] dummyA = fuckingbitch.ToArray();
         	for (int i = 0; i < dummyA.Length; i++)
         	{
@@ -75,7 +100,7 @@ public class HexWrite
 				}
         	}
 
-			BWriter.Seek(ModuleUnlockTblOffset, SeekOrigin.Begin);
+			BWriter.Seek(120, SeekOrigin.Begin);
 			for (int i = 0; i < MainData.Count; i++)
 			{
 				BWriter.Write(MainData[i]);
@@ -115,13 +140,46 @@ public class HexWrite
 					ModuleUnlockWriteData.Add(IntToHex(item.muUnk09));
 					break;
 				case "PvUnlockEntry":
-
+					PVUnlockWriteData.Add(IntToHex(item.suPVID));
+					PVUnlockWriteData.Add(IntToHex(item.suUnk01));
+					PVUnlockWriteData.Add(IntToHex(item.suPVClr01));
+					PVUnlockWriteData.Add(IntToHex(item.suPVClr02));
+					PVUnlockWriteData.Add(IntToHex(item.suPVClr03));
+					PVUnlockWriteData.Add(IntToHex(item.suPVClr04));
+					PVUnlockWriteData.Add(IntToHex(item.suPVClr05));
+					PVUnlockWriteData.Add(IntToHex(item.suPVClrDiff));
+					PVUnlockWriteData.Add(IntToHex(item.suPVClrRank));
+					PVUnlockWriteData.Add(IntToHex(item.suUnk02));
+					PVUnlockWriteData.Add(IntToHex(item.suUnk03));
+					PVUnlockWriteData.Add(IntToHex(item.suUnk04));
+					PVUnlockWriteData.Add(IntToHex(item.suUnk05));
+					PVUnlockWriteData.Add(IntToHex(item.suUnk06));
+					PVUnlockWriteData.Add(IntToHex(item.suUnk07));
+					PVUnlockWriteData.Add(IntToHex(item.suPVHighClrDiff));
+					PVUnlockWriteData.Add(IntToHex(item.suPVHighClrRank));
+					PVUnlockWriteData.Add(IntToHex(item.suUnk08));
 					break;
 				case "CmnUnlock":
-
+					CMNWriteData.Add(IntToHex(item.cuModID));
+					CMNWriteData.Add(IntToHex(item.cuUnk01));
+					CMNWriteData.Add(IntToHex(item.cuPvPID));
+					CMNWriteData.Add(IntToHex(item.cuSCC));
+					CMNWriteData.Add(IntToHex(item.cuUnk02));
+					CMNWriteData.Add(IntToHex(item.cuDiffClr));
+					CMNWriteData.Add(IntToHex(item.cuRankClr));
+					CMNWriteData.Add(IntToHex(item.cuUnk05));
+					CMNWriteData.Add(IntToHex(item.cuTCC));
+					CMNWriteData.Add(IntToHex(item.cuUnk07));
+					CMNWriteData.Add(IntToHex(item.cuUnk08));
+					CMNWriteData.Add(IntToHex(item.cuUnk09));
 					break;
 				case "VocaRoomUnlock":
-
+					VocaRoomWriteData.Add(IntToHex(item.bvVocaloid));
+					VocaRoomWriteData.Add(IntToHex(item.bvSongId));
+					VocaRoomWriteData.Add(IntToHex(item.bvScc));
+					break;
+				default: 
+					Console.WriteLine("Case not found"); 
 					break;
 			}
 		}
