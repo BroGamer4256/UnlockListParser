@@ -168,32 +168,6 @@ public class HexRead
 		xmlWrite(RoomPartsData, RoomPartsUnlock.type);
 		xmlWrite(RoomItemsData, RoomItemUnlock.type);
 		xmlWrite(GiftItemData, GiftItemUnlock.type);
-
-		GC.Collect();
-		GC.WaitForPendingFinalizers();
-
-		var headerInfo = new List<byte>();
-		fs = new FileStream(args[0], FileMode.Open);
-		var BWriter = new BinaryWriter(File.OpenWrite(@"unlock_list\\rawInfo.hex"));
-		var info = new FileInfo(args[0]);
-
-		fs.Seek(0, SeekOrigin.Begin);
-		for (int i = 0; i < info.Length; i++)
-		{
-			string tempString = string.Format("{0:X2}", fs.ReadByte());
-			byte[] tempByte = StringToByteArray(tempString);
-			for (int i2 = 0; i2 < tempByte.Length; i2++)
-			{
-				headerInfo.Add(tempByte[i2]);
-			}
-		}
-		fs.Close();
-
-		for (int i = 0; i < headerInfo.Count; i++)
-		{
-			BWriter.Write(headerInfo[i]);
-		}
-		BWriter.Close();
 	}
 
 	public static int EntryLength(string Table)

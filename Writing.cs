@@ -52,7 +52,6 @@ public class HexWrite
     {
 		if(!File.Exists(@"unlock_list_new.bin"))
             File.Create(@"unlock_list_new.bin");
-        //Writer();
 		ModuleData();
 		PVData();
         CMNData();
@@ -599,35 +598,6 @@ public class HexWrite
         ModuleUnlockTblSize = ModuleUnlockReadNode.Count;
         ModuleUnlockTblHexSize = HexRead.EntryLength("ModuleUnlock")*(ModuleUnlockTblSize*4);
 	}
-
-    public static void Writer()
-    {
-        GC.Collect();
-		GC.WaitForPendingFinalizers();
-
-		var OverflowData = new List<byte>();
-		var fs = new FileStream(@"unlock_list\\rawInfo.hex", FileMode.Open);
-		var BWriter = new BinaryWriter(File.OpenWrite(@"unlock_list_new.bin"));
-		var info = new FileInfo(@"unlock_list\\rawInfo.hex");
-
-		fs.Seek(0, SeekOrigin.Begin);
-		for (int i = 0; i < info.Length; i++)
-		{
-			string tempString = string.Format("{0:X2}", fs.ReadByte());
-			byte[] tempByte = HexRead.StringToByteArray(tempString);
-			for (int i2 = 0; i2 < tempByte.Length; i2++)
-			{
-				OverflowData.Add(tempByte[i2]);
-			}
-		}
-		fs.Close();
-
-		for (int i = 0; i < OverflowData.Count; i++)
-		{
-			BWriter.Write(OverflowData[i]);
-		}
-		BWriter.Close();
-    }
 
     public static void VocaData()
     {
