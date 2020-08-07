@@ -14,7 +14,7 @@ public class HexRead
 			HexWrite.Write();
 			Environment.Exit(0);
 		}
-		if (!args[0].EndsWith("unlock_list.bin") || !args[0].EndsWith("unlock_list_new.bin"))
+		if (!args[0].EndsWith("unlock_list.bin"))
 			throw new Exception("Not unlock_list.bin");
 		if (Directory.Exists("unlock_list"))
 		{
@@ -144,20 +144,18 @@ public class HexRead
 		};
 
 		var ModuleData = ModuleUnlock.Data(args[0]);
-
 		var PVData = PVUnlock.Data(args[0]);
-
 		var CMNData = CMNITMUnlock.Data(args[0]);
-
 		var VocalRoomData = VocaRoomUnlock.Data(args[0]);
-
 		var RoomThemeData = RoomThemeUnlock.Data(args[0]);
+		var RoomPartsData = RoomPartsUnlock.Data(args[0]);
 
 		xmlWrite(ModuleData, ModuleUnlock.type);
 		xmlWrite(PVData, PVUnlock.type);
 		xmlWrite(CMNData, CMNITMUnlock.type);
 		xmlWrite(VocalRoomData, VocaRoomUnlock.type);
 		xmlWrite(RoomThemeData, RoomThemeUnlock.type);
+		xmlWrite(RoomPartsData, RoomPartsUnlock.type);
 
 		GC.Collect();
 		GC.WaitForPendingFinalizers();

@@ -123,6 +123,25 @@ public struct DataStruct
 						rtUnkEnd = hex[13]
 					});
 					break;
+				case "RoomPartsUnlock":
+					DataList.Add(new RoomPartsUnlock()
+					{
+						rpThemeID = hex[0],
+						rpUnk01 = hex[1],
+						rpUnlkFlag = hex[2],
+						rpUnk02 = hex[3],
+						rpUnk03 = hex[4],
+						rpLwDiff = hex[5],
+						rpLwRank = hex[6],
+						rpUnk04 = hex[7],
+						rpUnk05 = hex[8],
+						rpUnk06 = hex[9],
+						rpUnk07 = hex[10],
+						rpHgDiff = hex[11],
+						rpHgRank = hex[12],
+						rpUnkEnd = hex[13]
+					});
+					break;
 				default: continue;
 			}
 			hex.Clear();
@@ -139,10 +158,10 @@ public struct ModuleUnlockEntry
 	public int muPvPID {get; set;}
 	public int muSCC {get; set;}
 	public int muUnk02 {get; set;}
-	public int muDiffClr {get; set;} // 0 for easy, 1 for normal, 2 for hard, 3 for extreme, 4 for any?
-	public int muRankClr {get; set;} // 0 for missxtake, 1 for lousy, 2 for standard, 3 for great, 4 for excellent, 5 for perfect, 6 appears to be any rank
+	public int muDiffClr {get; set;}
+	public int muRankClr {get; set;}
 	public int muUnk05 {get; set;}
-	public int muTCC {get; set;} // appears to take effect with a PV flag of -2, otherwise it's a clone of the song clear count.
+	public int muTCC {get; set;}
 	public int muUnk07 {get; set;}
 	public int muUnk08 {get; set;}
 	public int muUnk09 {get; set;}
@@ -209,4 +228,22 @@ public struct RoomThemeUnlock
 	public int rtHgDiff {get; set;}
 	public int rtHgRank {get; set;}
 	public int rtUnkEnd {get; set;}
+}
+
+public struct RoomPartsUnlock
+{
+	public int rpThemeID {get; set;}
+	public int rpUnk01 {get; set;}
+	public int rpUnlkFlag {get; set;}
+	public int rpUnk02 {get; set;}
+	public int rpUnk03 {get; set;}
+	public int rpLwDiff {get; set;}
+	public int rpLwRank {get; set;}
+	public int rpUnk04 {get; set;}
+	public int rpUnk05 {get; set;}
+	public int rpUnk06 {get; set;}
+	public int rpUnk07 {get; set;}
+	public int rpHgDiff {get; set;}
+	public int rpHgRank {get; set;}
+	public int rpUnkEnd {get; set;}
 }

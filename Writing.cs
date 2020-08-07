@@ -32,6 +32,11 @@ public class HexWrite
 	public static int RoomThemeUnlockTblOffset;
 	public static List<dynamic> RoomThemeReadData = new List<dynamic>();
 	public static List<dynamic> RoomThemeWriteData = new List<dynamic>();
+	public static int RoomPartsUnlockTblSize;
+    public static int RoomPartsUnlockTblHexSize;
+	public static int RoomPartsUnlockTblOffset;
+	public static List<dynamic> RoomPartsReadData = new List<dynamic>();
+	public static List<dynamic> RoomPartsWriteData = new List<dynamic>();
 
     public static void Write()
     {
@@ -43,6 +48,7 @@ public class HexWrite
         CMNData();
         VocaData();
 		RoomThemeData();
+		RoomPartData();
 
         HeaderData();
 		MainData();
@@ -57,6 +63,7 @@ public class HexWrite
 		DataList.Add(CMNReadData);
 		DataList.Add(VocaRoomReadData);
 		DataList.Add(RoomThemeReadData);
+		DataList.Add(RoomPartsReadData);
 
 		foreach (var item in DataList)
 		{
@@ -103,6 +110,13 @@ public class HexWrite
 					fuckingbitch.Add(item4);
 				}
 			}
+			foreach (string[] item3 in RoomPartsWriteData.ToArray())
+			{
+				foreach (string item4 in item3)
+				{
+					fuckingbitch.Add(item4);
+				}
+			}
 
 			string[] dummyA = fuckingbitch.ToArray();
         	for (int i = 0; i < dummyA.Length; i++)
@@ -114,13 +128,51 @@ public class HexWrite
 				}
         	}
 
-			BWriter.Seek(120, SeekOrigin.Begin);
+			BWriter.Seek(ModuleUnlockTblOffset, SeekOrigin.Begin);
 			for (int i = 0; i < MainData.Count; i++)
 			{
 				BWriter.Write(MainData[i]);
 			}
 			BWriter.Close();
 		}
+	}
+
+	public static void RoomPartData()
+	{
+		var doc = new XmlDocument();
+		doc.Load(@"unlock_list\\RoomPartsUnlock.xml");
+        var ReadNodes = new List<dynamic>();
+		foreach (var node in doc.DocumentElement.ChildNodes)
+		{
+			ReadNodes.Add(node);
+		}
+        string[] xmlData = {};
+        for (int i = 0; i < ReadNodes.Count; i++)
+		{
+			Array.Resize(ref xmlData, xmlData.Length + 1);
+			xmlData[i] = ReadNodes[i].InnerXml;
+			string[] xmlDataSplit = xmlData[i].Split(new string[] { "<", "/<", ">" }, StringSplitOptions.None);
+            var TBA = new RoomPartsUnlock() 
+			{
+				rpThemeID = Convert.ToInt32(xmlDataSplit[2]),
+				rpUnk01 = Convert.ToInt32(xmlDataSplit[6]),
+				rpUnlkFlag = Convert.ToInt32(xmlDataSplit[10]),
+				rpUnk02 = Convert.ToInt32(xmlDataSplit[14]),
+				rpUnk03 = Convert.ToInt32(xmlDataSplit[18]),
+				rpLwDiff = Convert.ToInt32(xmlDataSplit[22]),
+				rpLwRank = Convert.ToInt32(xmlDataSplit[26]),
+				rpUnk04 = Convert.ToInt32(xmlDataSplit[30]),
+				rpUnk05 = Convert.ToInt32(xmlDataSplit[34]),
+				rpUnk06 = Convert.ToInt32(xmlDataSplit[38]),
+				rpUnk07 = Convert.ToInt32(xmlDataSplit[42]),
+				rpHgDiff = Convert.ToInt32(xmlDataSplit[46]),
+				rpHgRank = Convert.ToInt32(xmlDataSplit[50]),
+				rpUnkEnd = Convert.ToInt32(xmlDataSplit[54])
+			};
+            RoomPartsReadData.Add(TBA);
+		}
+        RoomPartsUnlockTblSize = ReadNodes.Count;
+        RoomPartsUnlockTblHexSize = HexRead.EntryLength("RoomPartsUnlock")*(RoomThemeUnlockTblSize*4);
 	}
 
 	public static void RoomThemeData()
@@ -246,7 +298,23 @@ public class HexWrite
 					RoomThemeWriteData.Add(IntToHex(item.rtHgRank));
 					RoomThemeWriteData.Add(IntToHex(item.rtUnkEnd));
 					break;
-				default: 
+				case "RoomPartsUnlock":
+					RoomPartsWriteData.Add(IntToHex(item.rpThemeID));
+					RoomPartsWriteData.Add(IntToHex(item.rpUnk01));
+					RoomPartsWriteData.Add(IntToHex(item.rpUnlkFlag));
+					RoomPartsWriteData.Add(IntToHex(item.rpUnk02));
+					RoomPartsWriteData.Add(IntToHex(item.rpUnk03));
+					RoomPartsWriteData.Add(IntToHex(item.rpLwDiff));
+					RoomPartsWriteData.Add(IntToHex(item.rpLwRank));
+					RoomPartsWriteData.Add(IntToHex(item.rpUnk04));
+					RoomPartsWriteData.Add(IntToHex(item.rpUnk05));
+					RoomPartsWriteData.Add(IntToHex(item.rpUnk06));
+					RoomPartsWriteData.Add(IntToHex(item.rpUnk07));
+					RoomPartsWriteData.Add(IntToHex(item.rpHgDiff));
+					RoomPartsWriteData.Add(IntToHex(item.rpHgRank));
+					RoomPartsWriteData.Add(IntToHex(item.rpUnkEnd));
+					break;
+				default:
 					Console.WriteLine("Case not found"); 
 					break;
 			}
@@ -263,7 +331,7 @@ public class HexWrite
         var HeaderData = new List<byte>();
 		var intList = new List<int>();
 
-		ModuleUnlockTblOffset = 120;
+		ModuleUnlockTblOffset = 128;
 		PVUnlockTblOffset = ModuleUnlockTblOffset + ModuleUnlockTblHexSize;
 		CMNDataUnlockTblOffset = PVUnlockTblOffset + PVUnlockTblHexSize;
 		VocaRoomUnlockTblOffset = CMNDataUnlockTblOffset + CMNDataUnlockTblHexSize;
