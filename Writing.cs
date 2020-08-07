@@ -44,7 +44,6 @@ public class HexWrite
 
 	public static void MainData()
 	{
-		var MainData = new List<byte>();
 		var DataList = new List<dynamic>();
 		
 		DataList.Add(ModuleUnlockReadData);
@@ -54,6 +53,7 @@ public class HexWrite
 
 		foreach (var item in DataList)
 		{
+			var MainData = new List<byte>();
         	IntToHex(item);
 			var fuckingbitch = new List<string>();
 			var BWriter = new BinaryWriter(File.OpenWrite(@"unlock_list.bin"));
