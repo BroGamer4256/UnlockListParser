@@ -165,6 +165,27 @@ public struct DataStruct
 						riUnk12 = hex[17]
 					});
 					break;
+				case "GiftItemUnlock":
+					DataList.Add(new GiftItemUnlock()
+					{
+						giID = hex[0],
+						giUnk01 = hex[1],
+						giFlag = hex[2],
+						giUnk02 = hex[3],
+						giUnk03 = hex[4],
+						giLwClrDiff = hex[5],
+						giLwClrRank = hex[6],
+						giUnk04 = hex[7],
+						giUnk05 = hex[8],
+						giUnk06 = hex[9],
+						giUnk07 = hex[10],
+						giUnk08 = hex[11],
+						giHgClrDiff = hex[12],
+						giHgClrRank = hex[13],
+						giUnk09 = hex[14],
+						giUnk10 = hex[15]
+					});
+					break;
 				default: continue;
 			}
 			hex.Clear();
@@ -291,4 +312,24 @@ public struct RoomItemUnlock
 	public int riUnk10 {get; set;}
 	public int riUnk11 {get; set;}
 	public int riUnk12 {get; set;}
+}
+
+public struct GiftItemUnlock
+{
+	public int giID {get; set;}
+	public int giUnk01 {get; set;}
+	public int giFlag {get; set;}
+	public int giUnk02 {get; set;}
+	public int giUnk03 {get; set;}
+	public int giLwClrDiff {get; set;}
+	public int giLwClrRank {get; set;}
+	public int giUnk04 {get; set;}
+	public int giUnk05 {get; set;}
+	public int giUnk06 {get; set;}
+	public int giUnk07 {get; set;}
+	public int giUnk08 {get; set;}
+	public int giHgClrDiff {get; set;}
+	public int giHgClrRank {get; set;}
+	public int giUnk09 {get; set;}
+	public int giUnk10 {get; set;}
 }

@@ -98,56 +98,56 @@ public class HexRead
 		var GiftItemUnlock = new DataStruct() 
 		{
 			arrarySize = Convert.ToUInt32(hex[0 + offset], 16), 
-			offsetStart = Convert.ToUInt32(hex[1 + offset], 16)
+			offsetStart = Convert.ToUInt32(hex[1 + offset], 16),
 			type = "GiftItemUnlock"
 		};
 		offset += 2;
 		var PVTitleUnlock = new DataStruct() 
 		{
 			arrarySize = Convert.ToUInt32(hex[0 + offset], 16), 
-			offsetStart = Convert.ToUInt32(hex[1 + offset], 16)
+			offsetStart = Convert.ToUInt32(hex[1 + offset], 16),
 			type = "PVTitleUnlock"
 		};
 		offset += 2;
 		var RoomTitleUnlock = new DataStruct() 
 		{
 			arrarySize = Convert.ToUInt32(hex[0 + offset], 16), 
-			offsetStart = Convert.ToUInt32(hex[1 + offset], 16)
+			offsetStart = Convert.ToUInt32(hex[1 + offset], 16),
 			type = "RoomTitleUnlock"
 		};
 		offset += 2;
 		var EditTitleUnlock = new DataStruct() 
 		{
 			arrarySize = Convert.ToUInt32(hex[0 + offset], 16), 
-			offsetStart = Convert.ToUInt32(hex[1 + offset], 16)
+			offsetStart = Convert.ToUInt32(hex[1 + offset], 16),
 			type = "EditTitleUnlock"
 		};
 		offset += 2;
 		var ARTitleUnlock = new DataStruct() 
 		{
 			arrarySize = Convert.ToUInt32(hex[0 + offset], 16), 
-			offsetStart = Convert.ToUInt32(hex[1 + offset], 16)
+			offsetStart = Convert.ToUInt32(hex[1 + offset], 16),
 			type = "ARTitleUnlock"
 		};
 		offset += 2;
 		var NetworkTitleUnlock = new DataStruct() 
 		{
 			arrarySize = Convert.ToUInt32(hex[0 + offset], 16), 
-			offsetStart = Convert.ToUInt32(hex[1 + offset], 16)
+			offsetStart = Convert.ToUInt32(hex[1 + offset], 16),
 			type = "NetworkTitleUnlock"
 		};
 		offset += 2;
 		var ItemTitleUnlock = new DataStruct() 
 		{
 			arrarySize = Convert.ToUInt32(hex[0 + offset], 16), 
-			offsetStart = Convert.ToUInt32(hex[1 + offset], 16)
+			offsetStart = Convert.ToUInt32(hex[1 + offset], 16),
 			type = "ItemTitleUnlock"
 		};
 		offset += 2;
 		var SystemTitleUnlock = new DataStruct() 
 		{
 			arrarySize = Convert.ToUInt32(hex[0 + offset], 16), 
-			offsetStart = Convert.ToUInt32(hex[1 + offset], 16)
+			offsetStart = Convert.ToUInt32(hex[1 + offset], 16),
 			type = "SystemTitleUnlock"
 		};
 
@@ -158,6 +158,7 @@ public class HexRead
 		var RoomThemeData = RoomThemeUnlock.Data(args[0]);
 		var RoomPartsData = RoomPartsUnlock.Data(args[0]);
 		var RoomItemsData = RoomItemUnlock.Data(args[0]);
+		var GiftItemData = GiftItemUnlock.Data(args[0]);
 
 		xmlWrite(ModuleData, ModuleUnlock.type);
 		xmlWrite(PVData, PVUnlock.type);
@@ -166,6 +167,7 @@ public class HexRead
 		xmlWrite(RoomThemeData, RoomThemeUnlock.type);
 		xmlWrite(RoomPartsData, RoomPartsUnlock.type);
 		xmlWrite(RoomItemsData, RoomItemUnlock.type);
+		xmlWrite(GiftItemData, GiftItemUnlock.type);
 
 		GC.Collect();
 		GC.WaitForPendingFinalizers();

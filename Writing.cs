@@ -42,6 +42,11 @@ public class HexWrite
 	public static int RoomItemsUnlockTblOffset;
 	public static List<dynamic> RoomItemsReadData = new List<dynamic>();
 	public static List<dynamic> RoomItemsWriteData = new List<dynamic>();
+	public static int GiftItemUnlockTblSize;
+    public static int GiftItemUnlockTblHexSize;
+	public static int GiftItemUnlockTblOffset;
+	public static List<dynamic> GiftItemReadData = new List<dynamic>();
+	public static List<dynamic> GiftItemWriteData = new List<dynamic>();
 
     public static void Write()
     {
@@ -55,6 +60,7 @@ public class HexWrite
 		RoomThemeData();
 		RoomPartData();
 		RoomItemData();
+		GiftItemData();
 
         HeaderData();
 		MainData();
@@ -71,6 +77,7 @@ public class HexWrite
 		DataList.Add(RoomThemeReadData);
 		DataList.Add(RoomPartsReadData);
 		DataList.Add(RoomItemsReadData);
+		DataList.Add(GiftItemReadData);
 
 		foreach (var item in DataList)
 		{
@@ -128,6 +135,13 @@ public class HexWrite
 					fuckingbitch.Add(item4);
 				}
 			}
+			foreach (string[] item3 in GiftItemWriteData.ToArray())
+			{
+				foreach (string item4 in item3)
+				{
+					fuckingbitch.Add(item4);
+				}
+			}
 
 			string[] dummyA = fuckingbitch.ToArray();
         	for (int i = 0; i < dummyA.Length; i++)
@@ -146,6 +160,46 @@ public class HexWrite
 			}
 			BWriter.Close();
 		}
+	}
+
+	public static void GiftItemData()
+	{
+		var doc = new XmlDocument();
+		doc.Load(@"unlock_list\\GiftItemUnlock.xml");
+        var ReadNodes = new List<dynamic>();
+		foreach (var node in doc.DocumentElement.ChildNodes)
+		{
+			ReadNodes.Add(node);
+		}
+        string[] xmlData = {};
+        for (int i = 0; i < ReadNodes.Count; i++)
+		{
+			Array.Resize(ref xmlData, xmlData.Length + 1);
+			xmlData[i] = ReadNodes[i].InnerXml;
+			string[] xmlDataSplit = xmlData[i].Split(new string[] { "<", "/<", ">" }, StringSplitOptions.None);
+            var TBA = new GiftItemUnlock() 
+			{
+				giID = Convert.ToInt32(xmlDataSplit[2]),
+				giUnk01 = Convert.ToInt32(xmlDataSplit[6]),
+				giFlag = Convert.ToInt32(xmlDataSplit[10]),
+				giUnk02 = Convert.ToInt32(xmlDataSplit[14]),
+				giUnk03 = Convert.ToInt32(xmlDataSplit[18]),
+				giLwClrDiff = Convert.ToInt32(xmlDataSplit[22]),
+				giLwClrRank = Convert.ToInt32(xmlDataSplit[26]),
+				giUnk04 = Convert.ToInt32(xmlDataSplit[30]),
+				giUnk05 = Convert.ToInt32(xmlDataSplit[34]),
+				giUnk06 = Convert.ToInt32(xmlDataSplit[38]),
+				giUnk07 = Convert.ToInt32(xmlDataSplit[42]),
+				giUnk08 = Convert.ToInt32(xmlDataSplit[46]),
+				giHgClrDiff = Convert.ToInt32(xmlDataSplit[50]),
+				giHgClrRank = Convert.ToInt32(xmlDataSplit[54]),
+				giUnk09 = Convert.ToInt32(xmlDataSplit[58]),
+				giUnk10 = Convert.ToInt32(xmlDataSplit[62])
+			};
+            GiftItemReadData.Add(TBA);
+		}
+        GiftItemUnlockTblSize = ReadNodes.Count;
+        GiftItemUnlockTblHexSize = HexRead.EntryLength("GiftItemUnlock")*(GiftItemUnlockTblSize*4);
 	}
 
 	public static void RoomItemData()
@@ -205,7 +259,7 @@ public class HexWrite
 			Array.Resize(ref xmlData, xmlData.Length + 1);
 			xmlData[i] = ReadNodes[i].InnerXml;
 			string[] xmlDataSplit = xmlData[i].Split(new string[] { "<", "/<", ">" }, StringSplitOptions.None);
-            var TBA = new RoomPartsUnlock() 
+            var TBA = new RoomPartsUnlock()
 			{
 				rpThemeID = Convert.ToInt32(xmlDataSplit[2]),
 				rpUnk01 = Convert.ToInt32(xmlDataSplit[6]),
@@ -387,6 +441,24 @@ public class HexWrite
 					RoomItemsWriteData.Add(IntToHex(item.riUnk11));
 					RoomItemsWriteData.Add(IntToHex(item.riUnk12));
 					break;
+				case "GiftItemUnlock":
+					GiftItemWriteData.Add(IntToHex(item.giID));
+					GiftItemWriteData.Add(IntToHex(item.giUnk01));
+					GiftItemWriteData.Add(IntToHex(item.giFlag));
+					GiftItemWriteData.Add(IntToHex(item.giUnk02));
+					GiftItemWriteData.Add(IntToHex(item.giUnk03));
+					GiftItemWriteData.Add(IntToHex(item.giLwClrDiff));
+					GiftItemWriteData.Add(IntToHex(item.giLwClrRank));
+					GiftItemWriteData.Add(IntToHex(item.giUnk04));
+					GiftItemWriteData.Add(IntToHex(item.giUnk05));
+					GiftItemWriteData.Add(IntToHex(item.giUnk06));
+					GiftItemWriteData.Add(IntToHex(item.giUnk07));
+					GiftItemWriteData.Add(IntToHex(item.giUnk08));
+					GiftItemWriteData.Add(IntToHex(item.giHgClrDiff));
+					GiftItemWriteData.Add(IntToHex(item.giHgClrRank));
+					GiftItemWriteData.Add(IntToHex(item.giUnk09));
+					GiftItemWriteData.Add(IntToHex(item.giUnk10));
+					break;
 				default:
 					Console.WriteLine("Case not found"); 
 					break;
@@ -411,6 +483,7 @@ public class HexWrite
 		RoomThemeUnlockTblOffset = VocaRoomUnlockTblOffset + VocaRoomUnlockTblHexSize;
 		RoomPartsUnlockTblOffset = RoomThemeUnlockTblOffset + RoomThemeUnlockTblHexSize;
 		RoomItemsUnlockTblOffset = RoomPartsUnlockTblOffset + RoomPartsUnlockTblHexSize;
+		GiftItemUnlockTblOffset = RoomItemsUnlockTblOffset + RoomItemsUnlockTblHexSize;
 
 		intList.Add(ModuleUnlockTblSize);
 		intList.Add(ModuleUnlockTblOffset);
@@ -426,6 +499,8 @@ public class HexWrite
 		intList.Add(RoomPartsUnlockTblOffset);
 		intList.Add(RoomItemsUnlockTblSize);
 		intList.Add(RoomItemsUnlockTblOffset);
+		intList.Add(GiftItemUnlockTblSize);
+		intList.Add(GiftItemUnlockTblOffset);
 
 		foreach (int item in intList)
 		{
