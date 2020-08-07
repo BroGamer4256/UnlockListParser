@@ -160,8 +160,8 @@ public struct DataStruct
 						riUnk09 = hex[12],
 						riHgClearDiff = hex[13],
 						riHgClearRank = hex[14],
-						riPVHighClrDiff = hex[15],
-						riPVHighClrRank = hex[16],
+						riUnk10 = hex[15],
+						riUnk11 = hex[16],
 						riUnk12 = hex[17]
 					});
 					break;
@@ -288,7 +288,7 @@ public struct RoomItemUnlock
 	public int riUnk09 {get; set;}
 	public int riHgClearDiff {get; set;}
 	public int riHgClearRank {get; set;}
-	public int riPVHighClrDiff {get; set;}
-	public int riPVHighClrRank {get; set;}
+	public int riUnk10 {get; set;}
+	public int riUnk11 {get; set;}
 	public int riUnk12 {get; set;}
 }

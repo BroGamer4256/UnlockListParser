@@ -180,8 +180,8 @@ public class HexWrite
 				riUnk09 = Convert.ToInt32(xmlDataSplit[50]),
 				riHgClearDiff = Convert.ToInt32(xmlDataSplit[54]),
 				riHgClearRank = Convert.ToInt32(xmlDataSplit[58]),
-				riPVHighClrDiff = Convert.ToInt32(xmlDataSplit[62]),
-				riPVHighClrRank = Convert.ToInt32(xmlDataSplit[66]),
+				riUnk10 = Convert.ToInt32(xmlDataSplit[62]),
+				riUnk11 = Convert.ToInt32(xmlDataSplit[66]),
 				riUnk12 = Convert.ToInt32(xmlDataSplit[70])
 			};
             RoomItemsReadData.Add(TBA);
@@ -383,8 +383,8 @@ public class HexWrite
 					RoomItemsWriteData.Add(IntToHex(item.riUnk09));
 					RoomItemsWriteData.Add(IntToHex(item.riHgClearDiff));
 					RoomItemsWriteData.Add(IntToHex(item.riHgClearRank));
-					RoomItemsWriteData.Add(IntToHex(item.riPVHighClrDiff));
-					RoomItemsWriteData.Add(IntToHex(item.riPVHighClrRank));
+					RoomItemsWriteData.Add(IntToHex(item.riUnk10));
+					RoomItemsWriteData.Add(IntToHex(item.riUnk11));
 					RoomItemsWriteData.Add(IntToHex(item.riUnk12));
 					break;
 				default:

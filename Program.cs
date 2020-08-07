@@ -99,48 +99,56 @@ public class HexRead
 		{
 			arrarySize = Convert.ToUInt32(hex[0 + offset], 16), 
 			offsetStart = Convert.ToUInt32(hex[1 + offset], 16)
+			type = "GiftItemUnlock"
 		};
 		offset += 2;
 		var PVTitleUnlock = new DataStruct() 
 		{
 			arrarySize = Convert.ToUInt32(hex[0 + offset], 16), 
 			offsetStart = Convert.ToUInt32(hex[1 + offset], 16)
+			type = "PVTitleUnlock"
 		};
 		offset += 2;
 		var RoomTitleUnlock = new DataStruct() 
 		{
 			arrarySize = Convert.ToUInt32(hex[0 + offset], 16), 
 			offsetStart = Convert.ToUInt32(hex[1 + offset], 16)
+			type = "RoomTitleUnlock"
 		};
 		offset += 2;
 		var EditTitleUnlock = new DataStruct() 
 		{
 			arrarySize = Convert.ToUInt32(hex[0 + offset], 16), 
 			offsetStart = Convert.ToUInt32(hex[1 + offset], 16)
+			type = "EditTitleUnlock"
 		};
 		offset += 2;
 		var ARTitleUnlock = new DataStruct() 
 		{
 			arrarySize = Convert.ToUInt32(hex[0 + offset], 16), 
 			offsetStart = Convert.ToUInt32(hex[1 + offset], 16)
+			type = "ARTitleUnlock"
 		};
 		offset += 2;
 		var NetworkTitleUnlock = new DataStruct() 
 		{
 			arrarySize = Convert.ToUInt32(hex[0 + offset], 16), 
 			offsetStart = Convert.ToUInt32(hex[1 + offset], 16)
+			type = "NetworkTitleUnlock"
 		};
 		offset += 2;
 		var ItemTitleUnlock = new DataStruct() 
 		{
 			arrarySize = Convert.ToUInt32(hex[0 + offset], 16), 
 			offsetStart = Convert.ToUInt32(hex[1 + offset], 16)
+			type = "ItemTitleUnlock"
 		};
 		offset += 2;
 		var SystemTitleUnlock = new DataStruct() 
 		{
 			arrarySize = Convert.ToUInt32(hex[0 + offset], 16), 
 			offsetStart = Convert.ToUInt32(hex[1 + offset], 16)
+			type = "SystemTitleUnlock"
 		};
 
 		var ModuleData = ModuleUnlock.Data(args[0]);
@@ -197,6 +205,14 @@ public class HexRead
 			case "RoomThemeUnlock": return 14;
 			case "RoomPartsUnlock": return 14;
 			case "RoomItemUnlock": return 18;
+			case "GiftItemUnlock": return 16;
+			case "PVTitleUnlock": return 9;
+			case "RoomTitleUnlock": return 4;
+			case "EditTitleUnlock": return 4;
+			case "ARTitleUnlock": return 4;
+			case "NetworkTitleUnlock": return 4;
+			case "ItemTitleUnlock": return 4;
+			case "SystemTitleUnlock": return 4;
 			default: return 0;
 		}
 	}
