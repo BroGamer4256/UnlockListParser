@@ -225,7 +225,7 @@ public class HexWrite
             RoomPartsReadData.Add(TBA);
 		}
         RoomPartsUnlockTblSize = ReadNodes.Count;
-        RoomPartsUnlockTblHexSize = HexRead.EntryLength("RoomPartsUnlock")*(RoomThemeUnlockTblSize*4);
+        RoomPartsUnlockTblHexSize = HexRead.EntryLength("RoomPartsUnlock")*(RoomPartsUnlockTblSize*4);
 	}
 
 	public static void RoomThemeData()
