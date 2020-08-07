@@ -149,6 +149,7 @@ public class HexRead
 		var VocalRoomData = VocaRoomUnlock.Data(args[0]);
 		var RoomThemeData = RoomThemeUnlock.Data(args[0]);
 		var RoomPartsData = RoomPartsUnlock.Data(args[0]);
+		var RoomItemsData = RoomItemUnlock.Data(args[0]);
 
 		xmlWrite(ModuleData, ModuleUnlock.type);
 		xmlWrite(PVData, PVUnlock.type);
@@ -156,6 +157,7 @@ public class HexRead
 		xmlWrite(VocalRoomData, VocaRoomUnlock.type);
 		xmlWrite(RoomThemeData, RoomThemeUnlock.type);
 		xmlWrite(RoomPartsData, RoomPartsUnlock.type);
+		xmlWrite(RoomItemsData, RoomItemUnlock.type);
 
 		GC.Collect();
 		GC.WaitForPendingFinalizers();

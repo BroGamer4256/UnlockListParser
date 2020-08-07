@@ -142,6 +142,29 @@ public struct DataStruct
 						rpUnkEnd = hex[13]
 					});
 					break;
+				case "RoomItemUnlock":
+					DataList.Add(new RoomItemUnlock()
+					{
+						riItemID = hex[0],
+						riUnk01 = hex[1],
+						riUnlkReq = hex[2],
+						riUnk02 = hex[3],
+						riUnk03 = hex[4],
+						riLwClearDiff = hex[5],
+						riLwClearRank = hex[6],
+						riUnk04 = hex[7],
+						riUnk05 = hex[8],
+						riUnk06 = hex[9],
+						riUnk07 = hex[10],
+						riUnk08 = hex[11],
+						riUnk09 = hex[12],
+						riHgClearDiff = hex[13],
+						riHgClearRank = hex[14],
+						riPVHighClrDiff = hex[15],
+						riPVHighClrRank = hex[16],
+						riUnk12 = hex[17]
+					});
+					break;
 				default: continue;
 			}
 			hex.Clear();
@@ -246,4 +269,26 @@ public struct RoomPartsUnlock
 	public int rpHgDiff {get; set;}
 	public int rpHgRank {get; set;}
 	public int rpUnkEnd {get; set;}
+}
+
+public struct RoomItemUnlock
+{
+	public int riItemID {get; set;}
+	public int riUnk01 {get; set;}
+	public int riUnlkReq {get; set;}
+	public int riUnk02 {get; set;}
+	public int riUnk03 {get; set;}
+	public int riLwClearDiff {get; set;}
+	public int riLwClearRank {get; set;}
+	public int riUnk04 {get; set;}
+	public int riUnk05 {get; set;}
+	public int riUnk06 {get; set;}
+	public int riUnk07 {get; set;}
+	public int riUnk08 {get; set;}
+	public int riUnk09 {get; set;}
+	public int riHgClearDiff {get; set;}
+	public int riHgClearRank {get; set;}
+	public int riPVHighClrDiff {get; set;}
+	public int riPVHighClrRank {get; set;}
+	public int riUnk12 {get; set;}
 }
