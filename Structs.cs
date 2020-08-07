@@ -104,6 +104,25 @@ public struct DataStruct
                         bvScc = hex[2]
                     });
                     break;
+				case "RoomThemeUnlock":
+					DataList.Add(new RoomThemeUnlock()
+					{
+						rtThemeID = hex[0],
+						rtUnk01 = hex[1],
+						rtUnlkFlag = hex[2],
+						rtUnk02 = hex[3],
+						rtUnk03 = hex[4],
+						rtLwDiff = hex[5],
+						rtLwRank = hex[6],
+						rtUnk04 = hex[7],
+						rtUnk05 = hex[8],
+						rtUnk06 = hex[9],
+						rtUnk07 = hex[10],
+						rtHgDiff = hex[11],
+						rtHgRank = hex[12],
+						rtUnkEnd = hex[13]
+					});
+					break;
 				default: continue;
 			}
 			hex.Clear();
@@ -172,4 +191,22 @@ public struct VocaRoomUnlock
     public int bvVocaloid {get; set;}
     public int bvSongId {get; set;}
     public int bvScc {get; set;}
+}
+
+public struct RoomThemeUnlock
+{
+	public int rtThemeID {get; set;}
+	public int rtUnk01 {get; set;}
+	public int rtUnlkFlag {get; set;}
+	public int rtUnk02 {get; set;}
+	public int rtUnk03 {get; set;}
+	public int rtLwDiff {get; set;}
+	public int rtLwRank {get; set;}
+	public int rtUnk04 {get; set;}
+	public int rtUnk05 {get; set;}
+	public int rtUnk06 {get; set;}
+	public int rtUnk07 {get; set;}
+	public int rtHgDiff {get; set;}
+	public int rtHgRank {get; set;}
+	public int rtUnkEnd {get; set;}
 }

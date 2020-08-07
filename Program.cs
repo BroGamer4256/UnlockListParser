@@ -151,10 +151,13 @@ public class HexRead
 
 		var VocalRoomData = VocaRoomUnlock.Data(args[0]);
 
+		var RoomThemeData = RoomThemeUnlock.Data(args[0]);
+
 		xmlWrite(ModuleData, ModuleUnlock.type);
 		xmlWrite(PVData, PVUnlock.type);
 		xmlWrite(CMNData, CMNITMUnlock.type);
 		xmlWrite(VocalRoomData, VocaRoomUnlock.type);
+		xmlWrite(RoomThemeData, RoomThemeUnlock.type);
 
 		GC.Collect();
 		GC.WaitForPendingFinalizers();
@@ -220,7 +223,7 @@ public class HexRead
 		File.WriteAllText(@"unlock_list\\" + Object + ".xml", xml);
 	}
 
-	public static byte[] StringToByteArray(String hex)
+	public static byte[] StringToByteArray(string hex)
 	{
 		int NumberChars = hex.Length;
 		byte[] bytes = new byte[NumberChars / 2];
