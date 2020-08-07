@@ -186,6 +186,20 @@ public struct DataStruct
 						giUnk10 = hex[15]
 					});
 					break;
+				case "PVTitleUnlock":
+					DataList.Add(new PVTitleUnlock()
+					{
+						ptID = hex[0],
+						ptUnk01 = hex[1],
+						ptUnk02 = hex[2],
+						ptUnk03 = hex[3],
+						ptUnk04 = hex[4],
+						ptUnk05 = hex[5],
+						ptUnk06 = hex[6],
+						ptUnk07 = hex[7],
+						ptUnk08 = hex[8]
+					});
+					break;
 				default: continue;
 			}
 			hex.Clear();
@@ -332,4 +346,17 @@ public struct GiftItemUnlock
 	public int giHgClrRank {get; set;}
 	public int giUnk09 {get; set;}
 	public int giUnk10 {get; set;}
+}
+
+public struct PVTitleUnlock
+{
+	public int ptID {get; set;}
+	public int ptUnk01 {get; set;}
+	public int ptUnk02 {get; set;}
+	public int ptUnk03 {get; set;}
+	public int ptUnk04 {get; set;}
+	public int ptUnk05 {get; set;}
+	public int ptUnk06 {get; set;}
+	public int ptUnk07 {get; set;}
+	public int ptUnk08 {get; set;}
 }

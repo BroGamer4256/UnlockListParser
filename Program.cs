@@ -151,23 +151,15 @@ public class HexRead
 			type = "SystemTitleUnlock"
 		};
 
-		var ModuleData = ModuleUnlock.Data(args[0]);
-		var PVData = PVUnlock.Data(args[0]);
-		var CMNData = CMNITMUnlock.Data(args[0]);
-		var VocalRoomData = VocaRoomUnlock.Data(args[0]);
-		var RoomThemeData = RoomThemeUnlock.Data(args[0]);
-		var RoomPartsData = RoomPartsUnlock.Data(args[0]);
-		var RoomItemsData = RoomItemUnlock.Data(args[0]);
-		var GiftItemData = GiftItemUnlock.Data(args[0]);
-
-		xmlWrite(ModuleData, ModuleUnlock.type);
-		xmlWrite(PVData, PVUnlock.type);
-		xmlWrite(CMNData, CMNITMUnlock.type);
-		xmlWrite(VocalRoomData, VocaRoomUnlock.type);
-		xmlWrite(RoomThemeData, RoomThemeUnlock.type);
-		xmlWrite(RoomPartsData, RoomPartsUnlock.type);
-		xmlWrite(RoomItemsData, RoomItemUnlock.type);
-		xmlWrite(GiftItemData, GiftItemUnlock.type);
+		xmlWrite(ModuleUnlock.Data(args[0]), ModuleUnlock.type);
+		xmlWrite(PVUnlock.Data(args[0]), PVUnlock.type);
+		xmlWrite(CMNITMUnlock.Data(args[0]), CMNITMUnlock.type);
+		xmlWrite(VocaRoomUnlock.Data(args[0]), VocaRoomUnlock.type);
+		xmlWrite(RoomThemeUnlock.Data(args[0]), RoomThemeUnlock.type);
+		xmlWrite(RoomPartsUnlock.Data(args[0]), RoomPartsUnlock.type);
+		xmlWrite(RoomItemUnlock.Data(args[0]), RoomItemUnlock.type);
+		xmlWrite(GiftItemUnlock.Data(args[0]), GiftItemUnlock.type);
+		xmlWrite(PVTitleUnlock.Data(args[0]), PVTitleUnlock.type);
 	}
 
 	public static int EntryLength(string Table)

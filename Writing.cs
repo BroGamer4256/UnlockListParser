@@ -47,6 +47,11 @@ public class HexWrite
 	public static int GiftItemUnlockTblOffset;
 	public static List<dynamic> GiftItemReadData = new List<dynamic>();
 	public static List<dynamic> GiftItemWriteData = new List<dynamic>();
+	public static int PVTitleUnlockTblSize;
+    public static int PVTitleUnlockTblHexSize;
+	public static int PVTitleUnlockTblOffset;
+	public static List<dynamic> PVTitleReadData = new List<dynamic>();
+	public static List<dynamic> PVTitleWriteData = new List<dynamic>();
 
     public static void Write()
     {
@@ -60,6 +65,7 @@ public class HexWrite
 		RoomPartData();
 		RoomItemData();
 		GiftItemData();
+		PVTitleData();
 
         HeaderData();
 		MainData();
@@ -77,6 +83,7 @@ public class HexWrite
 		DataList.Add(RoomPartsReadData);
 		DataList.Add(RoomItemsReadData);
 		DataList.Add(GiftItemReadData);
+		DataList.Add(PVTitleReadData);
 
 		foreach (var item in DataList)
 		{
@@ -141,6 +148,13 @@ public class HexWrite
 					fuckingbitch.Add(item4);
 				}
 			}
+			foreach (string[] item3 in PVTitleWriteData.ToArray())
+			{
+				foreach (string item4 in item3)
+				{
+					fuckingbitch.Add(item4);
+				}
+			}
 
 			string[] dummyA = fuckingbitch.ToArray();
         	for (int i = 0; i < dummyA.Length; i++)
@@ -159,6 +173,39 @@ public class HexWrite
 			}
 			BWriter.Close();
 		}
+	}
+
+	public static void PVTitleData()
+	{
+		var doc = new XmlDocument();
+		doc.Load(@"unlock_list\\PVTitleUnlock.xml");
+        var ReadNodes = new List<dynamic>();
+		foreach (var node in doc.DocumentElement.ChildNodes)
+		{
+			ReadNodes.Add(node);
+		}
+        string[] xmlData = {};
+        for (int i = 0; i < ReadNodes.Count; i++)
+		{
+			Array.Resize(ref xmlData, xmlData.Length + 1);
+			xmlData[i] = ReadNodes[i].InnerXml;
+			string[] xmlDataSplit = xmlData[i].Split(new string[] { "<", "/<", ">" }, StringSplitOptions.None);
+            var TBA = new PVTitleUnlock() 
+			{
+				ptID = Convert.ToInt32(xmlDataSplit[2]),
+				ptUnk01 = Convert.ToInt32(xmlDataSplit[6]),
+				ptUnk02 = Convert.ToInt32(xmlDataSplit[10]),
+				ptUnk03 = Convert.ToInt32(xmlDataSplit[14]),
+				ptUnk04 = Convert.ToInt32(xmlDataSplit[18]),
+				ptUnk05 = Convert.ToInt32(xmlDataSplit[22]),
+				ptUnk06 = Convert.ToInt32(xmlDataSplit[26]),
+				ptUnk07 = Convert.ToInt32(xmlDataSplit[30]),
+				ptUnk08 = Convert.ToInt32(xmlDataSplit[34])
+			};
+            GiftItemReadData.Add(TBA);
+		}
+        PVTitleUnlockTblSize = ReadNodes.Count;
+        PVTitleUnlockTblHexSize = HexRead.EntryLength("PVTitleUnlock")*(PVTitleUnlockTblSize*4);
 	}
 
 	public static void GiftItemData()
@@ -458,6 +505,17 @@ public class HexWrite
 					GiftItemWriteData.Add(IntToHex(item.giUnk09));
 					GiftItemWriteData.Add(IntToHex(item.giUnk10));
 					break;
+				case "PVTitleUnlock":
+					PVTitleWriteData.Add(IntToHex(item.ptID));
+					PVTitleWriteData.Add(IntToHex(item.ptUnk01));
+					PVTitleWriteData.Add(IntToHex(item.ptUnk02));
+					PVTitleWriteData.Add(IntToHex(item.ptUnk03));
+					PVTitleWriteData.Add(IntToHex(item.ptUnk04));
+					PVTitleWriteData.Add(IntToHex(item.ptUnk05));
+					PVTitleWriteData.Add(IntToHex(item.ptUnk06));
+					PVTitleWriteData.Add(IntToHex(item.ptUnk07));
+					PVTitleWriteData.Add(IntToHex(item.ptUnk08));
+					break;
 				default:
 					Console.WriteLine("Case not found"); 
 					break;
@@ -483,6 +541,7 @@ public class HexWrite
 		RoomPartsUnlockTblOffset = RoomThemeUnlockTblOffset + RoomThemeUnlockTblHexSize;
 		RoomItemsUnlockTblOffset = RoomPartsUnlockTblOffset + RoomPartsUnlockTblHexSize;
 		GiftItemUnlockTblOffset = RoomItemsUnlockTblOffset + RoomItemsUnlockTblHexSize;
+		PVTitleUnlockTblOffset = GiftItemUnlockTblOffset + GiftItemUnlockTblHexSize;
 
 		intList.Add(ModuleUnlockTblSize);
 		intList.Add(ModuleUnlockTblOffset);
@@ -500,6 +559,8 @@ public class HexWrite
 		intList.Add(RoomItemsUnlockTblOffset);
 		intList.Add(GiftItemUnlockTblSize);
 		intList.Add(GiftItemUnlockTblOffset);
+		intList.Add(PVTitleUnlockTblSize);
+		intList.Add(PVTitleUnlockTblOffset);
 
 		foreach (int item in intList)
 		{
