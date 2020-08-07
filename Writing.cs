@@ -185,10 +185,6 @@ public class HexWrite
 				riUnk12 = Convert.ToInt32(xmlDataSplit[70])
 			};
             RoomItemsReadData.Add(TBA);
-			foreach (var bitchfucker in xmlDataSplit)
-			{
-				Console.WriteLine(bitchfucker);
-			}
 		}
         RoomItemsUnlockTblSize = ReadNodes.Count;
         RoomItemsUnlockTblHexSize = HexRead.EntryLength("RoomItemUnlock")*(RoomItemsUnlockTblSize*4);
