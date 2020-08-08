@@ -162,6 +162,7 @@ public class HexRead
 		xmlWrite(PVTitleUnlock.Data(args[0]), PVTitleUnlock.type);
 		xmlWrite(RoomTitleUnlock.Data(args[0]), RoomTitleUnlock.type);
 		xmlWrite(EditTitleUnlock.Data(args[0]), EditTitleUnlock.type);
+		xmlWrite(ARTitleUnlock.Data(args[0]), ARTitleUnlock.type);
 	}
 
 	public static int EntryLength(string Table)

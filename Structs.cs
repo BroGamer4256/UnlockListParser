@@ -218,6 +218,15 @@ public struct DataStruct
 						etUnk03 = hex[3]
 					});
 					break;
+				case "ARTitleUnlock":
+					DataList.Add(new ARTitleUnlock()
+					{
+						arID = hex[0],
+						arUnk01 = hex[1],
+						arUnk02 = hex[2],
+						arUnk03 = hex[3]
+					});
+					break;
 				default: continue;
 			}
 			hex.Clear();
@@ -393,4 +402,12 @@ public struct EditTitleUnlock
 	public int etUnk01 {get; set;}
 	public int etUnk02 {get; set;}
 	public int etUnk03 {get; set;}
+}
+
+public struct ARTitleUnlock
+{
+	public int arID {get; set;}
+	public int arUnk01 {get; set;}
+	public int arUnk02 {get; set;}
+	public int arUnk03 {get; set;}
 }

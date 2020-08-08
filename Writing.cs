@@ -62,6 +62,11 @@ public class HexWrite
 	public static int EditTitleUnlockTblOffset;
 	public static List<dynamic> EditTitleReadData = new List<dynamic>();
 	public static List<dynamic> EditTitleWriteData = new List<dynamic>();
+	public static int ARTitleUnlockTblSize;
+	public static int ARTitleUnlockTblHexSize;
+	public static int ARTitleUnlockTblOffset;
+	public static List<dynamic> ARTitleReadData = new List<dynamic>();
+	public static List<dynamic> ARTitleWriteData = new List<dynamic>();
 
 	public static void Write()
 	{
@@ -78,6 +83,7 @@ public class HexWrite
 		PVTitleData();
 		RoomTitleData();
 		EditTitleData();
+		ARTitleData();
 		
 		HeaderData();
 		MainData();
@@ -98,6 +104,7 @@ public class HexWrite
 		DataList.Add(PVTitleReadData);
 		DataList.Add(RoomTitleReadData);
 		DataList.Add(EditTitleReadData);
+		DataList.Add(ARTitleReadData);
 
 		foreach (var item in DataList)
 		{
@@ -184,6 +191,13 @@ public class HexWrite
 				fuckingbitch.Add(item4);
 			}
 		}
+		foreach (string[] item3 in ARTitleWriteData.ToArray())
+		{
+			foreach (string item4 in item3)
+			{
+				fuckingbitch.Add(item4);
+			}
+		}
 
 		string[] dummyA = fuckingbitch.ToArray();
 		for (int i = 0; i < dummyA.Length; i++)
@@ -201,6 +215,34 @@ public class HexWrite
 			BWriter.Write(MainData[i]);
 		}
 		BWriter.Close();
+	}
+
+	public static void ARTitleData()
+	{
+		var doc = new XmlDocument();
+		doc.Load(@"unlock_list\\ARTitleUnlock.xml");
+		var ReadNodes = new List<dynamic>();
+		foreach (var node in doc.DocumentElement.ChildNodes)
+		{
+			ReadNodes.Add(node);
+		}
+		string[] xmlData = {};
+		for (int i = 0; i < ReadNodes.Count; i++)
+		{
+			Array.Resize(ref xmlData, xmlData.Length + 1);
+			xmlData[i] = ReadNodes[i].InnerXml;
+			string[] xmlDataSplit = xmlData[i].Split(new string[] { "<", "/<", ">" }, StringSplitOptions.None);
+			var TBA = new ARTitleUnlock() 
+			{
+				arID = Convert.ToInt32(xmlDataSplit[2]),
+				arUnk01 = Convert.ToInt32(xmlDataSplit[6]),
+				arUnk02 = Convert.ToInt32(xmlDataSplit[10]),
+				arUnk03 = Convert.ToInt32(xmlDataSplit[14])
+			};
+			ARTitleReadData.Add(TBA);
+		}
+		ARTitleUnlockTblSize = ReadNodes.Count;
+		ARTitleUnlockTblHexSize = HexRead.EntryLength("ARTitleUnlock")*(ARTitleUnlockTblSize*4);
 	}
 
 	public static void EditTitleData()
@@ -607,10 +649,16 @@ public class HexWrite
 					RoomTitleWriteData.Add(IntToHex(item.rtUnk03));
 					break;
 				case "EditTitleUnlock":
-					RoomTitleWriteData.Add(IntToHex(item.etID));
-					RoomTitleWriteData.Add(IntToHex(item.etUnk01));
-					RoomTitleWriteData.Add(IntToHex(item.etUnk02));
-					RoomTitleWriteData.Add(IntToHex(item.etUnk03));
+					EditTitleWriteData.Add(IntToHex(item.etID));
+					EditTitleWriteData.Add(IntToHex(item.etUnk01));
+					EditTitleWriteData.Add(IntToHex(item.etUnk02));
+					EditTitleWriteData.Add(IntToHex(item.etUnk03));
+					break;
+				case "ARTitleUnlock":
+					ARTitleWriteData.Add(IntToHex(item.arID));
+					ARTitleWriteData.Add(IntToHex(item.arUnk01));
+					ARTitleWriteData.Add(IntToHex(item.arUnk02));
+					ARTitleWriteData.Add(IntToHex(item.arUnk03));
 					break;
 				default:
 					Console.WriteLine("Case not found"); 
@@ -638,6 +686,9 @@ public class HexWrite
 		RoomItemsUnlockTblOffset = RoomPartsUnlockTblOffset + RoomPartsUnlockTblHexSize;
 		GiftItemUnlockTblOffset = RoomItemsUnlockTblOffset + RoomItemsUnlockTblHexSize;
 		PVTitleUnlockTblOffset = GiftItemUnlockTblOffset + GiftItemUnlockTblHexSize;
+		RoomTitleUnlockTblOffset = PVTitleUnlockTblOffset + PVTitleUnlockTblHexSize;
+		EditTitleUnlockTblOffset = RoomTitleUnlockTblOffset + RoomTitleUnlockTblHexSize;
+		ARTitleUnlockTblOffset = EditTitleUnlockTblOffset + EditTitleUnlockTblHexSize;
 
 		intList.Add(ModuleUnlockTblSize);
 		intList.Add(ModuleUnlockTblOffset);
@@ -657,6 +708,12 @@ public class HexWrite
 		intList.Add(GiftItemUnlockTblOffset);
 		intList.Add(PVTitleUnlockTblSize);
 		intList.Add(PVTitleUnlockTblOffset);
+		intList.Add(RoomTitleUnlockTblSize);
+		intList.Add(RoomTitleUnlockTblOffset);
+		intList.Add(EditTitleUnlockTblSize);
+		intList.Add(EditTitleUnlockTblOffset);
+		intList.Add(ARTitleUnlockTblSize);
+		intList.Add(ARTitleUnlockTblOffset);
 
 		foreach (int item in intList)
 		{
