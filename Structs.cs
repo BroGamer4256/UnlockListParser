@@ -79,31 +79,31 @@ public struct DataStruct
 						suUnk08 = hex[17]
 					});
 					break;
-                case "CMNITMUnlock":
-                    DataList.Add(new CmnUnlock() 
+					case "CMNITMUnlock":
+					DataList.Add(new CmnUnlock() 
 					{
 						cuModID = hex[0], 
-                        cuUnk01 = hex[1], 
-                        cuPvPID = hex[2], 
-                        cuSCC = hex[3], 
-                        cuUnk02 = hex[4], 
-                        cuDiffClr = hex[5], 
-                        cuRankClr = hex[6], 
-                        cuUnk05 = hex[7], 
-                        cuTCC = hex[8], 
-                        cuUnk07 = hex[9], 
-                        cuUnk08 = hex[10], 
-                        cuUnk09 = hex[11]
+						cuUnk01 = hex[1], 
+						cuPvPID = hex[2], 
+						cuSCC = hex[3], 
+						cuUnk02 = hex[4], 
+						cuDiffClr = hex[5], 
+						cuRankClr = hex[6], 
+						cuUnk05 = hex[7], 
+						cuTCC = hex[8], 
+						cuUnk07 = hex[9], 
+						cuUnk08 = hex[10], 
+						cuUnk09 = hex[11]
 					});
-                    break;
-                case "VocaRoomUnlock":
-                    DataList.Add(new VocaRoomUnlock()
-                    {
-                        bvVocaloid = hex[0],
-                        bvSongId = hex[1],
-                        bvScc = hex[2]
-                    });
-                    break;
+					break;
+					case "VocaRoomUnlock":
+					DataList.Add(new VocaRoomUnlock()
+					{
+						bvVocaloid = hex[0],
+						bvSongId = hex[1],
+						bvScc = hex[2]
+					});
+					break;
 				case "RoomThemeUnlock":
 					DataList.Add(new RoomThemeUnlock()
 					{

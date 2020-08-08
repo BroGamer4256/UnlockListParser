@@ -17,33 +17,33 @@ public class HexWrite
 	public static int PVUnlockTblOffset;
 	public static List<dynamic> PVUnlockReadData = new List<dynamic>();
 	public static List<dynamic> PVUnlockWriteData = new List<dynamic>();
-    public static int CMNDataUnlockTblSize;
-    public static int CMNDataUnlockTblHexSize;
+	public static int CMNDataUnlockTblSize;
+	public static int CMNDataUnlockTblHexSize;
 	public static int CMNDataUnlockTblOffset;
 	public static List<dynamic> CMNReadData = new List<dynamic>();
 	public static List<dynamic> CMNWriteData = new List<dynamic>();
 	public static int VocaRoomUnlockTblSize;
-    public static int VocaRoomUnlockTblHexSize;
+	public static int VocaRoomUnlockTblHexSize;
 	public static int VocaRoomUnlockTblOffset;
 	public static List<dynamic> VocaRoomReadData = new List<dynamic>();
 	public static List<dynamic> VocaRoomWriteData = new List<dynamic>();
 	public static int RoomThemeUnlockTblSize;
-    public static int RoomThemeUnlockTblHexSize;
+	public static int RoomThemeUnlockTblHexSize;
 	public static int RoomThemeUnlockTblOffset;
 	public static List<dynamic> RoomThemeReadData = new List<dynamic>();
 	public static List<dynamic> RoomThemeWriteData = new List<dynamic>();
 	public static int RoomPartsUnlockTblSize;
-    public static int RoomPartsUnlockTblHexSize;
+	public static int RoomPartsUnlockTblHexSize;
 	public static int RoomPartsUnlockTblOffset;
 	public static List<dynamic> RoomPartsReadData = new List<dynamic>();
 	public static List<dynamic> RoomPartsWriteData = new List<dynamic>();
 	public static int RoomItemsUnlockTblSize;
-    public static int RoomItemsUnlockTblHexSize;
+	public static int RoomItemsUnlockTblHexSize;
 	public static int RoomItemsUnlockTblOffset;
 	public static List<dynamic> RoomItemsReadData = new List<dynamic>();
 	public static List<dynamic> RoomItemsWriteData = new List<dynamic>();
 	public static int GiftItemUnlockTblSize;
-    public static int GiftItemUnlockTblHexSize;
+	public static int GiftItemUnlockTblHexSize;
 	public static int GiftItemUnlockTblOffset;
 	public static List<dynamic> GiftItemReadData = new List<dynamic>();
 	public static List<dynamic> GiftItemWriteData = new List<dynamic>();
@@ -53,23 +53,23 @@ public class HexWrite
 	public static List<dynamic> PVTitleReadData = new List<dynamic>();
 	public static List<dynamic> PVTitleWriteData = new List<dynamic>();
 
-    public static void Write()
-    {
+	public static void Write()
+	{
 		if(!File.Exists(@"unlock_list_new.bin"))
-            File.Create(@"unlock_list_new.bin");
+			File.Create(@"unlock_list_new.bin");
 		ModuleData();
 		PVData();
-        CMNData();
-        VocaData();
+		CMNData();
+		VocaData();
 		RoomThemeData();
 		RoomPartData();
 		RoomItemData();
 		GiftItemData();
 		PVTitleData();
-
-        HeaderData();
+		
+		HeaderData();
 		MainData();
-    }
+	}
 
 	public static void MainData()
 	{
@@ -88,7 +88,7 @@ public class HexWrite
 		foreach (var item in DataList)
 		{
 			var MainData = new List<byte>();
-        	IntToHex(item);
+			IntToHex(item);
 			var fuckingbitch = new List<string>();
 			var BWriter = new BinaryWriter(File.OpenWrite(@"unlock_list_new.bin"));
 
@@ -157,14 +157,14 @@ public class HexWrite
 			}
 
 			string[] dummyA = fuckingbitch.ToArray();
-        	for (int i = 0; i < dummyA.Length; i++)
-        	{
-            	byte[] tempByte = HexRead.StringToByteArray(dummyA[i]);
+			for (int i = 0; i < dummyA.Length; i++)
+			{
+				byte[] tempByte = HexRead.StringToByteArray(dummyA[i]);
 				for (int i2 = 0; i2 < tempByte.Length; i2++)
 				{
 					MainData.Add(tempByte[i2]);
 				}
-        	}
+			}
 
 			BWriter.Seek(ModuleUnlockTblOffset, SeekOrigin.Begin);
 			for (int i = 0; i < MainData.Count; i++)
@@ -179,18 +179,18 @@ public class HexWrite
 	{
 		var doc = new XmlDocument();
 		doc.Load(@"unlock_list\\PVTitleUnlock.xml");
-        var ReadNodes = new List<dynamic>();
+		var ReadNodes = new List<dynamic>();
 		foreach (var node in doc.DocumentElement.ChildNodes)
 		{
 			ReadNodes.Add(node);
 		}
-        string[] xmlData = {};
-        for (int i = 0; i < ReadNodes.Count; i++)
+		string[] xmlData = {};
+		for (int i = 0; i < ReadNodes.Count; i++)
 		{
 			Array.Resize(ref xmlData, xmlData.Length + 1);
 			xmlData[i] = ReadNodes[i].InnerXml;
 			string[] xmlDataSplit = xmlData[i].Split(new string[] { "<", "/<", ">" }, StringSplitOptions.None);
-            var TBA = new PVTitleUnlock() 
+			var TBA = new PVTitleUnlock() 
 			{
 				ptID = Convert.ToInt32(xmlDataSplit[2]),
 				ptUnk01 = Convert.ToInt32(xmlDataSplit[6]),
@@ -202,28 +202,28 @@ public class HexWrite
 				ptUnk07 = Convert.ToInt32(xmlDataSplit[30]),
 				ptUnk08 = Convert.ToInt32(xmlDataSplit[34])
 			};
-            GiftItemReadData.Add(TBA);
+			GiftItemReadData.Add(TBA);
 		}
-        PVTitleUnlockTblSize = ReadNodes.Count;
-        PVTitleUnlockTblHexSize = HexRead.EntryLength("PVTitleUnlock")*(PVTitleUnlockTblSize*4);
+		PVTitleUnlockTblSize = ReadNodes.Count;
+		PVTitleUnlockTblHexSize = HexRead.EntryLength("PVTitleUnlock")*(PVTitleUnlockTblSize*4);
 	}
 
 	public static void GiftItemData()
 	{
 		var doc = new XmlDocument();
 		doc.Load(@"unlock_list\\GiftItemUnlock.xml");
-        var ReadNodes = new List<dynamic>();
+		var ReadNodes = new List<dynamic>();
 		foreach (var node in doc.DocumentElement.ChildNodes)
 		{
 			ReadNodes.Add(node);
 		}
-        string[] xmlData = {};
-        for (int i = 0; i < ReadNodes.Count; i++)
+		string[] xmlData = {};
+		for (int i = 0; i < ReadNodes.Count; i++)
 		{
 			Array.Resize(ref xmlData, xmlData.Length + 1);
 			xmlData[i] = ReadNodes[i].InnerXml;
 			string[] xmlDataSplit = xmlData[i].Split(new string[] { "<", "/<", ">" }, StringSplitOptions.None);
-            var TBA = new GiftItemUnlock() 
+			var TBA = new GiftItemUnlock() 
 			{
 				giID = Convert.ToInt32(xmlDataSplit[2]),
 				giUnk01 = Convert.ToInt32(xmlDataSplit[6]),
@@ -242,28 +242,28 @@ public class HexWrite
 				giUnk09 = Convert.ToInt32(xmlDataSplit[58]),
 				giUnk10 = Convert.ToInt32(xmlDataSplit[62])
 			};
-            GiftItemReadData.Add(TBA);
+			GiftItemReadData.Add(TBA);
 		}
-        GiftItemUnlockTblSize = ReadNodes.Count;
-        GiftItemUnlockTblHexSize = HexRead.EntryLength("GiftItemUnlock")*(GiftItemUnlockTblSize*4);
+		GiftItemUnlockTblSize = ReadNodes.Count;
+		GiftItemUnlockTblHexSize = HexRead.EntryLength("GiftItemUnlock")*(GiftItemUnlockTblSize*4);
 	}
 
 	public static void RoomItemData()
 	{
 		var doc = new XmlDocument();
 		doc.Load(@"unlock_list\\RoomItemUnlock.xml");
-        var ReadNodes = new List<dynamic>();
+		var ReadNodes = new List<dynamic>();
 		foreach (var node in doc.DocumentElement.ChildNodes)
 		{
 			ReadNodes.Add(node);
 		}
-        string[] xmlData = {};
-        for (int i = 0; i < ReadNodes.Count; i++)
+		string[] xmlData = {};
+		for (int i = 0; i < ReadNodes.Count; i++)
 		{
 			Array.Resize(ref xmlData, xmlData.Length + 1);
 			xmlData[i] = ReadNodes[i].InnerXml;
 			string[] xmlDataSplit = xmlData[i].Split(new string[] { "<", "/<", ">" }, StringSplitOptions.None);
-            var TBA = new RoomItemUnlock() 
+			var TBA = new RoomItemUnlock() 
 			{
 				riItemID = Convert.ToInt32(xmlDataSplit[2]),
 				riUnk01 = Convert.ToInt32(xmlDataSplit[6]),
@@ -284,28 +284,28 @@ public class HexWrite
 				riUnk11 = Convert.ToInt32(xmlDataSplit[66]),
 				riUnk12 = Convert.ToInt32(xmlDataSplit[70])
 			};
-            RoomItemsReadData.Add(TBA);
+			RoomItemsReadData.Add(TBA);
 		}
-        RoomItemsUnlockTblSize = ReadNodes.Count;
-        RoomItemsUnlockTblHexSize = HexRead.EntryLength("RoomItemUnlock")*(RoomItemsUnlockTblSize*4);
+		RoomItemsUnlockTblSize = ReadNodes.Count;
+		RoomItemsUnlockTblHexSize = HexRead.EntryLength("RoomItemUnlock")*(RoomItemsUnlockTblSize*4);
 	}
 
 	public static void RoomPartData()
 	{
 		var doc = new XmlDocument();
 		doc.Load(@"unlock_list\\RoomPartsUnlock.xml");
-        var ReadNodes = new List<dynamic>();
+		var ReadNodes = new List<dynamic>();
 		foreach (var node in doc.DocumentElement.ChildNodes)
 		{
 			ReadNodes.Add(node);
 		}
-        string[] xmlData = {};
-        for (int i = 0; i < ReadNodes.Count; i++)
+		string[] xmlData = {};
+		for (int i = 0; i < ReadNodes.Count; i++)
 		{
 			Array.Resize(ref xmlData, xmlData.Length + 1);
 			xmlData[i] = ReadNodes[i].InnerXml;
 			string[] xmlDataSplit = xmlData[i].Split(new string[] { "<", "/<", ">" }, StringSplitOptions.None);
-            var TBA = new RoomPartsUnlock()
+			var TBA = new RoomPartsUnlock()
 			{
 				rpThemeID = Convert.ToInt32(xmlDataSplit[2]),
 				rpUnk01 = Convert.ToInt32(xmlDataSplit[6]),
@@ -322,28 +322,28 @@ public class HexWrite
 				rpHgRank = Convert.ToInt32(xmlDataSplit[50]),
 				rpUnkEnd = Convert.ToInt32(xmlDataSplit[54])
 			};
-            RoomPartsReadData.Add(TBA);
+			RoomPartsReadData.Add(TBA);
 		}
-        RoomPartsUnlockTblSize = ReadNodes.Count;
-        RoomPartsUnlockTblHexSize = HexRead.EntryLength("RoomPartsUnlock")*(RoomPartsUnlockTblSize*4);
+		RoomPartsUnlockTblSize = ReadNodes.Count;
+		RoomPartsUnlockTblHexSize = HexRead.EntryLength("RoomPartsUnlock")*(RoomPartsUnlockTblSize*4);
 	}
 
 	public static void RoomThemeData()
 	{
 		var doc = new XmlDocument();
 		doc.Load(@"unlock_list\\RoomThemeUnlock.xml");
-        var ReadNodes = new List<dynamic>();
+		var ReadNodes = new List<dynamic>();
 		foreach (var node in doc.DocumentElement.ChildNodes)
 		{
 			ReadNodes.Add(node);
 		}
-        string[] xmlData = {};
-        for (int i = 0; i < ReadNodes.Count; i++)
+		string[] xmlData = {};
+		for (int i = 0; i < ReadNodes.Count; i++)
 		{
 			Array.Resize(ref xmlData, xmlData.Length + 1);
 			xmlData[i] = ReadNodes[i].InnerXml;
 			string[] xmlDataSplit = xmlData[i].Split(new string[] { "<", "/<", ">" }, StringSplitOptions.None);
-            var TBA = new RoomThemeUnlock() 
+			var TBA = new RoomThemeUnlock() 
 			{
 				rtThemeID = Convert.ToInt32(xmlDataSplit[2]),
 				rtUnk01 = Convert.ToInt32(xmlDataSplit[6]),
@@ -360,19 +360,19 @@ public class HexWrite
 				rtHgRank = Convert.ToInt32(xmlDataSplit[50]),
 				rtUnkEnd = Convert.ToInt32(xmlDataSplit[54]),
 			};
-            RoomThemeReadData.Add(TBA);
+			RoomThemeReadData.Add(TBA);
 		}
-        RoomThemeUnlockTblSize = ReadNodes.Count;
-        RoomThemeUnlockTblHexSize = HexRead.EntryLength("RoomThemeUnlock")*(RoomThemeUnlockTblSize*4);
+		RoomThemeUnlockTblSize = ReadNodes.Count;
+		RoomThemeUnlockTblHexSize = HexRead.EntryLength("RoomThemeUnlock")*(RoomThemeUnlockTblSize*4);
 	}
 
-    public static string[] IntToHex(int bitch)
-    {
-        string dummy = bitch.ToString("X");
-        dummy = dummy.PadLeft(8, '0');
-        string[] dummyA = {dummy.Substring(6,2), dummy.Substring(4,2), dummy.Substring(2,2), dummy.Substring(0,2)};
+	public static string[] IntToHex(int bitch)
+	{
+		string dummy = bitch.ToString("X");
+		dummy = dummy.PadLeft(8, '0');
+		string[] dummyA = {dummy.Substring(6,2), dummy.Substring(4,2), dummy.Substring(2,2), dummy.Substring(0,2)};
 		return dummyA;
-    }
+	}
 
 	public static string[] IntToHex(List<dynamic> fucker)
 	{
@@ -524,13 +524,13 @@ public class HexWrite
 		return items;
 	}
 
-    public static void HeaderData()
-    {
-        GC.Collect();
+	public static void HeaderData()
+	{
+		GC.Collect();
 		GC.WaitForPendingFinalizers();
 
-        var BWriter = new BinaryWriter(File.OpenWrite(@"unlock_list_new.bin"));
-        var HeaderData = new List<byte>();
+		var BWriter = new BinaryWriter(File.OpenWrite(@"unlock_list_new.bin"));
+		var HeaderData = new List<byte>();
 		var intList = new List<int>();
 
 		ModuleUnlockTblOffset = 128;
@@ -564,40 +564,40 @@ public class HexWrite
 
 		foreach (int item in intList)
 		{
-        	string[] dummyA = IntToHex(item);
-        	for (int i = 0; i < dummyA.Length; i++)
-        	{
-            	byte[] tempByte = HexRead.StringToByteArray(dummyA[i]);
+			string[] dummyA = IntToHex(item);
+			for (int i = 0; i < dummyA.Length; i++)
+			{
+				byte[] tempByte = HexRead.StringToByteArray(dummyA[i]);
 				for (int i2 = 0; i2 < tempByte.Length; i2++)
 				{
 					HeaderData.Add(tempByte[i2]);
 				}
-        	}
+			}
 		}
 
-        for (int i = 0; i < HeaderData.Count; i++)
+		for (int i = 0; i < HeaderData.Count; i++)
 		{
 			BWriter.Write(HeaderData[i]);
 		}
 		BWriter.Close();
-    }
+	}
 
 	public static void PVData()
 	{
 		var doc = new XmlDocument();
 		doc.Load(@"unlock_list\\PVUnlock.xml");
-        var PVUnlockReadNode = new List<dynamic>();
+		var PVUnlockReadNode = new List<dynamic>();
 		foreach (var node in doc.DocumentElement.ChildNodes)
 		{
 			PVUnlockReadNode.Add(node);
 		}
-        string[] xmlData = {};
-        for (int i = 0; i < PVUnlockReadNode.Count; i++)
+		string[] xmlData = {};
+		for (int i = 0; i < PVUnlockReadNode.Count; i++)
 		{
 			Array.Resize(ref xmlData, xmlData.Length + 1);
 			xmlData[i] = PVUnlockReadNode[i].InnerXml;
 			string[] xmlDataSplit = xmlData[i].Split(new string[] { "<", "/<", ">" }, StringSplitOptions.None);
-            var TBA = new PvUnlockEntry() 
+			var TBA = new PvUnlockEntry() 
 			{
 				suPVID = Convert.ToInt32(xmlDataSplit[2]),
 				suUnk01 = Convert.ToInt32(xmlDataSplit[6]),
@@ -618,28 +618,28 @@ public class HexWrite
 				suPVHighClrRank = Convert.ToInt32(xmlDataSplit[66]),
 				suUnk08 = Convert.ToInt32(xmlDataSplit[70])
 			};
-            PVUnlockReadData.Add(TBA);
+			PVUnlockReadData.Add(TBA);
 		}
-        PVUnlockTblSize = PVUnlockReadNode.Count;
-        PVUnlockTblHexSize = HexRead.EntryLength("PVUnlock")*(PVUnlockTblSize*4);
+		PVUnlockTblSize = PVUnlockReadNode.Count;
+		PVUnlockTblHexSize = HexRead.EntryLength("PVUnlock")*(PVUnlockTblSize*4);
 	}
 
 	public static void ModuleData()
 	{
 		var doc = new XmlDocument();
 		doc.Load(@"unlock_list\\ModuleUnlock.xml");
-        var ModuleUnlockReadNode = new List<dynamic>();
+		var ModuleUnlockReadNode = new List<dynamic>();
 		foreach (var node in doc.DocumentElement.ChildNodes)
 		{
 			ModuleUnlockReadNode.Add(node);
 		}
-        string[] xmlData = {};
-        for (int i = 0; i < ModuleUnlockReadNode.Count; i++)
+		string[] xmlData = {};
+		for (int i = 0; i < ModuleUnlockReadNode.Count; i++)
 		{
 			Array.Resize(ref xmlData, xmlData.Length + 1);
 			xmlData[i] = ModuleUnlockReadNode[i].InnerXml;
 			string[] xmlDataSplit = xmlData[i].Split(new string[] { "<", "/<", ">" }, StringSplitOptions.None);
-            var TBA = new ModuleUnlockEntry() 
+			var TBA = new ModuleUnlockEntry() 
 			{
 				ModuleID = Convert.ToInt32(xmlDataSplit[2]),
 				muUnk01 = Convert.ToInt32(xmlDataSplit[6]),
@@ -654,42 +654,42 @@ public class HexWrite
 				muUnk08 = Convert.ToInt32(xmlDataSplit[42]),
 				muUnk09 = Convert.ToInt32(xmlDataSplit[46])
 			};
-            ModuleUnlockReadData.Add(TBA);
+			ModuleUnlockReadData.Add(TBA);
 		}
-        ModuleUnlockTblSize = ModuleUnlockReadNode.Count;
-        ModuleUnlockTblHexSize = HexRead.EntryLength("ModuleUnlock")*(ModuleUnlockTblSize*4);
+		ModuleUnlockTblSize = ModuleUnlockReadNode.Count;
+		ModuleUnlockTblHexSize = HexRead.EntryLength("ModuleUnlock")*(ModuleUnlockTblSize*4);
 	}
 
-    public static void VocaData()
-    {
-        var doc = new XmlDocument();
+	public static void VocaData()
+	{
+		var doc = new XmlDocument();
 		doc.Load(@"unlock_list\\VocaRoomUnlock.xml");
-        var VocaRoomReadNode = new List<dynamic>();
+		var VocaRoomReadNode = new List<dynamic>();
 		foreach (var node in doc.DocumentElement.ChildNodes)
 		{
 			VocaRoomReadNode.Add(node);
 		}
-        string[] xmlData = {};
-        for (int i = 0; i < VocaRoomReadNode.Count; i++)
+		string[] xmlData = {};
+		for (int i = 0; i < VocaRoomReadNode.Count; i++)
 		{
 			Array.Resize(ref xmlData, xmlData.Length + 1);
 			xmlData[i] = VocaRoomReadNode[i].InnerXml;
 			string[] xmlDataSplit = xmlData[i].Split(new string[] { "<", "/<", ">" }, StringSplitOptions.None);
-            var TBA = new VocaRoomUnlock() 
+			var TBA = new VocaRoomUnlock() 
 			{
 				bvVocaloid = Convert.ToInt32(xmlDataSplit[2]),
-                bvSongId = Convert.ToInt32(xmlDataSplit[6]),
-                bvScc = Convert.ToInt32(xmlDataSplit[10])
+				bvSongId = Convert.ToInt32(xmlDataSplit[6]),
+				bvScc = Convert.ToInt32(xmlDataSplit[10])
 			};
-            VocaRoomReadData.Add(TBA);
+			VocaRoomReadData.Add(TBA);
 		}
-        VocaRoomUnlockTblSize = VocaRoomReadNode.Count;
-        VocaRoomUnlockTblHexSize = HexRead.EntryLength("VocaRoomUnlock")*(VocaRoomUnlockTblSize*4);
-    }
+		VocaRoomUnlockTblSize = VocaRoomReadNode.Count;
+		VocaRoomUnlockTblHexSize = HexRead.EntryLength("VocaRoomUnlock")*(VocaRoomUnlockTblSize*4);
+	}
 
-    public static void CMNData()
-    {
-        var doc = new XmlDocument();
+	public static void CMNData()
+	{
+		var doc = new XmlDocument();
 		doc.Load(@"unlock_list\\CMNITMUnlock.xml");
 		var CMNReadNode = new List<dynamic>();
 		foreach (var node in doc.DocumentElement.ChildNodes)
@@ -717,9 +717,9 @@ public class HexWrite
 				cuUnk08 = Convert.ToInt32(xmlDataSplit[42]), 
 				cuUnk09 = Convert.ToInt32(xmlDataSplit[46])
 			};
-            CMNReadData.Add(TBA);
+			CMNReadData.Add(TBA);
 		}
-        CMNDataUnlockTblSize = CMNReadNode.Count;
-        CMNDataUnlockTblHexSize = HexRead.EntryLength("CMNITMUnlock")*(CMNDataUnlockTblSize*4);
-    }
+		CMNDataUnlockTblSize = CMNReadNode.Count;
+		CMNDataUnlockTblHexSize = HexRead.EntryLength("CMNITMUnlock")*(CMNDataUnlockTblSize*4);
+	}
 }
