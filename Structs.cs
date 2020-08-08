@@ -200,6 +200,24 @@ public struct DataStruct
 						ptUnk08 = hex[8]
 					});
 					break;
+				case "RoomTitleUnlock":
+					DataList.Add(new RoomTitleUnlock()
+					{
+						rtID = hex[0],
+						rtUnk01 = hex[1],
+						rtUnk02 = hex[2],
+						rtUnk03 = hex[3]
+					});
+					break;
+				case "EditTitleUnlock":
+					DataList.Add(new EditTitleUnlock()
+					{
+						etID = hex[0],
+						etUnk01 = hex[1],
+						etUnk02 = hex[2],
+						etUnk03 = hex[3]
+					});
+					break;
 				default: continue;
 			}
 			hex.Clear();
@@ -359,4 +377,20 @@ public struct PVTitleUnlock
 	public int ptUnk06 {get; set;}
 	public int ptUnk07 {get; set;}
 	public int ptUnk08 {get; set;}
+}
+
+public struct RoomTitleUnlock
+{
+	public int rtID {get; set;}
+	public int rtUnk01 {get; set;}
+	public int rtUnk02 {get; set;}
+	public int rtUnk03 {get; set;}
+}
+
+public struct EditTitleUnlock
+{
+	public int etID {get; set;}
+	public int etUnk01 {get; set;}
+	public int etUnk02 {get; set;}
+	public int etUnk03 {get; set;}
 }

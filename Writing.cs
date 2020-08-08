@@ -48,10 +48,20 @@ public class HexWrite
 	public static List<dynamic> GiftItemReadData = new List<dynamic>();
 	public static List<dynamic> GiftItemWriteData = new List<dynamic>();
 	public static int PVTitleUnlockTblSize;
-    public static int PVTitleUnlockTblHexSize;
+	public static int PVTitleUnlockTblHexSize;
 	public static int PVTitleUnlockTblOffset;
 	public static List<dynamic> PVTitleReadData = new List<dynamic>();
 	public static List<dynamic> PVTitleWriteData = new List<dynamic>();
+	public static int RoomTitleUnlockTblSize;
+	public static int RoomTitleUnlockTblHexSize;
+	public static int RoomTitleUnlockTblOffset;
+	public static List<dynamic> RoomTitleReadData = new List<dynamic>();
+	public static List<dynamic> RoomTitleWriteData = new List<dynamic>();
+	public static int EditTitleUnlockTblSize;
+	public static int EditTitleUnlockTblHexSize;
+	public static int EditTitleUnlockTblOffset;
+	public static List<dynamic> EditTitleReadData = new List<dynamic>();
+	public static List<dynamic> EditTitleWriteData = new List<dynamic>();
 
 	public static void Write()
 	{
@@ -66,6 +76,8 @@ public class HexWrite
 		RoomItemData();
 		GiftItemData();
 		PVTitleData();
+		RoomTitleData();
+		EditTitleData();
 		
 		HeaderData();
 		MainData();
@@ -84,95 +96,167 @@ public class HexWrite
 		DataList.Add(RoomItemsReadData);
 		DataList.Add(GiftItemReadData);
 		DataList.Add(PVTitleReadData);
+		DataList.Add(RoomTitleReadData);
+		DataList.Add(EditTitleReadData);
 
 		foreach (var item in DataList)
 		{
-			var MainData = new List<byte>();
 			IntToHex(item);
-			var fuckingbitch = new List<string>();
-			var BWriter = new BinaryWriter(File.OpenWrite(@"unlock_list_new.bin"));
-
-			foreach (string[] item3 in ModuleUnlockWriteData.ToArray())
-			{
-				foreach (string item4 in item3)
-				{
-					fuckingbitch.Add(item4);
-				}
-			}
-			foreach (string[] item3 in PVUnlockWriteData.ToArray())
-			{
-				foreach (string item4 in item3)
-				{
-					fuckingbitch.Add(item4);
-				}
-			}
-			foreach (string[] item3 in CMNWriteData.ToArray())
-			{
-				foreach (string item4 in item3)
-				{
-					fuckingbitch.Add(item4);
-				}
-			}
-			foreach (string[] item3 in VocaRoomWriteData.ToArray())
-			{
-				foreach (string item4 in item3)
-				{
-					fuckingbitch.Add(item4);
-				}
-			}
-			foreach (string[] item3 in RoomThemeWriteData.ToArray())
-			{
-				foreach (string item4 in item3)
-				{
-					fuckingbitch.Add(item4);
-				}
-			}
-			foreach (string[] item3 in RoomPartsWriteData.ToArray())
-			{
-				foreach (string item4 in item3)
-				{
-					fuckingbitch.Add(item4);
-				}
-			}
-			foreach (string[] item3 in RoomItemsWriteData.ToArray())
-			{
-				foreach (string item4 in item3)
-				{
-					fuckingbitch.Add(item4);
-				}
-			}
-			foreach (string[] item3 in GiftItemWriteData.ToArray())
-			{
-				foreach (string item4 in item3)
-				{
-					fuckingbitch.Add(item4);
-				}
-			}
-			foreach (string[] item3 in PVTitleWriteData.ToArray())
-			{
-				foreach (string item4 in item3)
-				{
-					fuckingbitch.Add(item4);
-				}
-			}
-
-			string[] dummyA = fuckingbitch.ToArray();
-			for (int i = 0; i < dummyA.Length; i++)
-			{
-				byte[] tempByte = HexRead.StringToByteArray(dummyA[i]);
-				for (int i2 = 0; i2 < tempByte.Length; i2++)
-				{
-					MainData.Add(tempByte[i2]);
-				}
-			}
-
-			BWriter.Seek(ModuleUnlockTblOffset, SeekOrigin.Begin);
-			for (int i = 0; i < MainData.Count; i++)
-			{
-				BWriter.Write(MainData[i]);
-			}
-			BWriter.Close();
 		}
+		var MainData = new List<byte>();
+		var fuckingbitch = new List<string>();
+		var BWriter = new BinaryWriter(File.OpenWrite(@"unlock_list_new.bin"));
+
+		foreach (string[] item3 in ModuleUnlockWriteData.ToArray())
+		{
+			foreach (string item4 in item3)
+			{
+				fuckingbitch.Add(item4);
+			}
+		}
+		foreach (string[] item3 in PVUnlockWriteData.ToArray())
+		{
+			foreach (string item4 in item3)
+			{
+				fuckingbitch.Add(item4);
+			}
+		}
+		foreach (string[] item3 in CMNWriteData.ToArray())
+		{
+			foreach (string item4 in item3)
+			{
+				fuckingbitch.Add(item4);
+			}
+		}
+		foreach (string[] item3 in VocaRoomWriteData.ToArray())
+		{
+			foreach (string item4 in item3)
+			{
+				fuckingbitch.Add(item4);
+			}
+		}
+		foreach (string[] item3 in RoomThemeWriteData.ToArray())
+		{
+			foreach (string item4 in item3)
+			{
+				fuckingbitch.Add(item4);
+			}
+		}
+		foreach (string[] item3 in RoomPartsWriteData.ToArray())
+		{
+			foreach (string item4 in item3)
+			{
+				fuckingbitch.Add(item4);
+			}
+		}
+		foreach (string[] item3 in RoomItemsWriteData.ToArray())
+		{
+			foreach (string item4 in item3)
+			{
+				fuckingbitch.Add(item4);
+			}
+		}
+		foreach (string[] item3 in GiftItemWriteData.ToArray())
+		{
+			foreach (string item4 in item3)
+			{
+				fuckingbitch.Add(item4);
+			}
+		}
+		foreach (string[] item3 in PVTitleWriteData.ToArray())
+		{
+			foreach (string item4 in item3)
+			{
+				fuckingbitch.Add(item4);
+			}
+		}
+		foreach (string[] item3 in RoomTitleWriteData.ToArray())
+		{
+			foreach (string item4 in item3)
+			{
+				fuckingbitch.Add(item4);
+			}
+		}
+		foreach (string[] item3 in EditTitleWriteData.ToArray())
+		{
+			foreach (string item4 in item3)
+			{
+				fuckingbitch.Add(item4);
+			}
+		}
+
+		string[] dummyA = fuckingbitch.ToArray();
+		for (int i = 0; i < dummyA.Length; i++)
+		{
+			byte[] tempByte = HexRead.StringToByteArray(dummyA[i]);
+			for (int i2 = 0; i2 < tempByte.Length; i2++)
+			{
+				MainData.Add(tempByte[i2]);
+			}
+		}
+
+		BWriter.Seek(ModuleUnlockTblOffset, SeekOrigin.Begin);
+		for (int i = 0; i < MainData.Count; i++)
+		{
+			BWriter.Write(MainData[i]);
+		}
+		BWriter.Close();
+	}
+
+	public static void EditTitleData()
+	{
+		var doc = new XmlDocument();
+		doc.Load(@"unlock_list\\EditTitleUnlock.xml");
+		var ReadNodes = new List<dynamic>();
+		foreach (var node in doc.DocumentElement.ChildNodes)
+		{
+			ReadNodes.Add(node);
+		}
+		string[] xmlData = {};
+		for (int i = 0; i < ReadNodes.Count; i++)
+		{
+			Array.Resize(ref xmlData, xmlData.Length + 1);
+			xmlData[i] = ReadNodes[i].InnerXml;
+			string[] xmlDataSplit = xmlData[i].Split(new string[] { "<", "/<", ">" }, StringSplitOptions.None);
+			var TBA = new EditTitleUnlock() 
+			{
+				etID = Convert.ToInt32(xmlDataSplit[2]),
+				etUnk01 = Convert.ToInt32(xmlDataSplit[6]),
+				etUnk02 = Convert.ToInt32(xmlDataSplit[10]),
+				etUnk03 = Convert.ToInt32(xmlDataSplit[14])
+			};
+			EditTitleReadData.Add(TBA);
+		}
+		EditTitleUnlockTblSize = ReadNodes.Count;
+		EditTitleUnlockTblHexSize = HexRead.EntryLength("EditTitleUnlock")*(EditTitleUnlockTblSize*4);
+	}
+
+	public static void RoomTitleData()
+	{
+		var doc = new XmlDocument();
+		doc.Load(@"unlock_list\\RoomTitleUnlock.xml");
+		var ReadNodes = new List<dynamic>();
+		foreach (var node in doc.DocumentElement.ChildNodes)
+		{
+			ReadNodes.Add(node);
+		}
+		string[] xmlData = {};
+		for (int i = 0; i < ReadNodes.Count; i++)
+		{
+			Array.Resize(ref xmlData, xmlData.Length + 1);
+			xmlData[i] = ReadNodes[i].InnerXml;
+			string[] xmlDataSplit = xmlData[i].Split(new string[] { "<", "/<", ">" }, StringSplitOptions.None);
+			var TBA = new RoomTitleUnlock() 
+			{
+				rtID = Convert.ToInt32(xmlDataSplit[2]),
+				rtUnk01 = Convert.ToInt32(xmlDataSplit[6]),
+				rtUnk02 = Convert.ToInt32(xmlDataSplit[10]),
+				rtUnk03 = Convert.ToInt32(xmlDataSplit[14])
+			};
+			RoomTitleReadData.Add(TBA);
+		}
+		RoomTitleUnlockTblSize = ReadNodes.Count;
+		RoomTitleUnlockTblHexSize = HexRead.EntryLength("RoomTitleUnlock")*(RoomTitleUnlockTblSize*4);
 	}
 
 	public static void PVTitleData()
@@ -202,7 +286,7 @@ public class HexWrite
 				ptUnk07 = Convert.ToInt32(xmlDataSplit[30]),
 				ptUnk08 = Convert.ToInt32(xmlDataSplit[34])
 			};
-			GiftItemReadData.Add(TBA);
+			PVTitleReadData.Add(TBA);
 		}
 		PVTitleUnlockTblSize = ReadNodes.Count;
 		PVTitleUnlockTblHexSize = HexRead.EntryLength("PVTitleUnlock")*(PVTitleUnlockTblSize*4);
@@ -515,6 +599,18 @@ public class HexWrite
 					PVTitleWriteData.Add(IntToHex(item.ptUnk06));
 					PVTitleWriteData.Add(IntToHex(item.ptUnk07));
 					PVTitleWriteData.Add(IntToHex(item.ptUnk08));
+					break;
+				case "RoomTitleUnlock":
+					RoomTitleWriteData.Add(IntToHex(item.rtID));
+					RoomTitleWriteData.Add(IntToHex(item.rtUnk01));
+					RoomTitleWriteData.Add(IntToHex(item.rtUnk02));
+					RoomTitleWriteData.Add(IntToHex(item.rtUnk03));
+					break;
+				case "EditTitleUnlock":
+					RoomTitleWriteData.Add(IntToHex(item.etID));
+					RoomTitleWriteData.Add(IntToHex(item.etUnk01));
+					RoomTitleWriteData.Add(IntToHex(item.etUnk02));
+					RoomTitleWriteData.Add(IntToHex(item.etUnk03));
 					break;
 				default:
 					Console.WriteLine("Case not found"); 

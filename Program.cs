@@ -160,6 +160,8 @@ public class HexRead
 		xmlWrite(RoomItemUnlock.Data(args[0]), RoomItemUnlock.type);
 		xmlWrite(GiftItemUnlock.Data(args[0]), GiftItemUnlock.type);
 		xmlWrite(PVTitleUnlock.Data(args[0]), PVTitleUnlock.type);
+		xmlWrite(RoomTitleUnlock.Data(args[0]), RoomTitleUnlock.type);
+		xmlWrite(EditTitleUnlock.Data(args[0]), EditTitleUnlock.type);
 	}
 
 	public static int EntryLength(string Table)
