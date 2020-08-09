@@ -67,6 +67,22 @@ public class HexWrite
 	public static int ARTitleUnlockTblOffset;
 	public static List<dynamic> ARTitleReadData = new List<dynamic>();
 	public static List<dynamic> ARTitleWriteData = new List<dynamic>();
+	public static int NetworkTitleUnlockTblSize;
+	public static int NetworkTitleUnlockTblHexSize;
+	public static int NetworkTitleUnlockTblOffset;
+	public static List<dynamic> NetworkTitleReadData = new List<dynamic>();
+	public static List<dynamic> NetworkTitleWriteData = new List<dynamic>();
+	public static int GiftTitleUnlockTblSize;
+	public static int GiftTitleUnlockTblHexSize;
+	public static int GiftTitleUnlockTblOffset;
+	public static List<dynamic> GiftTitleReadData = new List<dynamic>();
+	public static List<dynamic> GiftTitleWriteData = new List<dynamic>();
+	public static int SystemTitleUnlockTblSize;
+	public static int SystemTitleUnlockTblHexSize;
+	public static int SystemTitleUnlockTblOffset;
+	public static List<dynamic> SystemTitleReadData = new List<dynamic>();
+	public static List<dynamic> SystemTitleWriteData = new List<dynamic>();
+
 
 	public static void Write()
 	{
@@ -84,6 +100,9 @@ public class HexWrite
 		RoomTitleData();
 		EditTitleData();
 		ARTitleData();
+		NetworkTitleData();
+		GiftTitleData();
+		SystemTitleData();
 		
 		HeaderData();
 		MainData();
@@ -105,6 +124,9 @@ public class HexWrite
 		DataList.Add(RoomTitleReadData);
 		DataList.Add(EditTitleReadData);
 		DataList.Add(ARTitleReadData);
+		DataList.Add(NetworkTitleReadData);
+		DataList.Add(GiftTitleReadData);
+		DataList.Add(SystemTitleReadData);
 
 		foreach (var item in DataList)
 		{
@@ -198,6 +220,27 @@ public class HexWrite
 				fuckingbitch.Add(item4);
 			}
 		}
+		foreach (string[] item3 in NetworkTitleWriteData.ToArray())
+		{
+			foreach (string item4 in item3)
+			{
+				fuckingbitch.Add(item4);
+			}
+		}
+		foreach (string[] item3 in GiftTitleWriteData.ToArray())
+		{
+			foreach (string item4 in item3)
+			{
+				fuckingbitch.Add(item4);
+			}
+		}
+		foreach (string[] item3 in SystemTitleWriteData.ToArray())
+		{
+			foreach (string item4 in item3)
+			{
+				fuckingbitch.Add(item4);
+			}
+		}
 
 		string[] dummyA = fuckingbitch.ToArray();
 		for (int i = 0; i < dummyA.Length; i++)
@@ -215,6 +258,90 @@ public class HexWrite
 			BWriter.Write(MainData[i]);
 		}
 		BWriter.Close();
+	}
+
+	public static void SystemTitleData()
+	{
+		var doc = new XmlDocument();
+		doc.Load(@"unlock_list\\SystemTitleUnlock.xml");
+		var ReadNodes = new List<dynamic>();
+		foreach (var node in doc.DocumentElement.ChildNodes)
+		{
+			ReadNodes.Add(node);
+		}
+		string[] xmlData = {};
+		for (int i = 0; i < ReadNodes.Count; i++)
+		{
+			Array.Resize(ref xmlData, xmlData.Length + 1);
+			xmlData[i] = ReadNodes[i].InnerXml;
+			string[] xmlDataSplit = xmlData[i].Split(new string[] { "<", "/<", ">" }, StringSplitOptions.None);
+			var TBA = new SystemTitleUnlock() 
+			{
+				stID = Convert.ToInt32(xmlDataSplit[2]),
+				stUnk01 = Convert.ToInt32(xmlDataSplit[6]),
+				stUnk02 = Convert.ToInt32(xmlDataSplit[10]),
+				stUnk03 = Convert.ToInt32(xmlDataSplit[14])
+			};
+			SystemTitleReadData.Add(TBA);
+		}
+		SystemTitleUnlockTblSize = ReadNodes.Count;
+		SystemTitleUnlockTblHexSize = HexRead.EntryLength("SystemTitleUnlock")*(SystemTitleUnlockTblSize*4);
+	}
+
+	public static void GiftTitleData()
+	{
+		var doc = new XmlDocument();
+		doc.Load(@"unlock_list\\GiftTitleUnlock.xml");
+		var ReadNodes = new List<dynamic>();
+		foreach (var node in doc.DocumentElement.ChildNodes)
+		{
+			ReadNodes.Add(node);
+		}
+		string[] xmlData = {};
+		for (int i = 0; i < ReadNodes.Count; i++)
+		{
+			Array.Resize(ref xmlData, xmlData.Length + 1);
+			xmlData[i] = ReadNodes[i].InnerXml;
+			string[] xmlDataSplit = xmlData[i].Split(new string[] { "<", "/<", ">" }, StringSplitOptions.None);
+			var TBA = new GiftTitleUnlock() 
+			{
+				gtID = Convert.ToInt32(xmlDataSplit[2]),
+				gtUnk01 = Convert.ToInt32(xmlDataSplit[6]),
+				gtUnk02 = Convert.ToInt32(xmlDataSplit[10]),
+				gtUnk03 = Convert.ToInt32(xmlDataSplit[14])
+			};
+			GiftTitleReadData.Add(TBA);
+		}
+		GiftTitleUnlockTblSize = ReadNodes.Count;
+		GiftTitleUnlockTblHexSize = HexRead.EntryLength("GiftTitleUnlock")*(GiftTitleUnlockTblSize*4);
+	}
+
+	public static void NetworkTitleData()
+	{
+		var doc = new XmlDocument();
+		doc.Load(@"unlock_list\\NetworkTitleUnlock.xml");
+		var ReadNodes = new List<dynamic>();
+		foreach (var node in doc.DocumentElement.ChildNodes)
+		{
+			ReadNodes.Add(node);
+		}
+		string[] xmlData = {};
+		for (int i = 0; i < ReadNodes.Count; i++)
+		{
+			Array.Resize(ref xmlData, xmlData.Length + 1);
+			xmlData[i] = ReadNodes[i].InnerXml;
+			string[] xmlDataSplit = xmlData[i].Split(new string[] { "<", "/<", ">" }, StringSplitOptions.None);
+			var TBA = new NetworkTitleUnlock() 
+			{
+				ntID = Convert.ToInt32(xmlDataSplit[2]),
+				ntUnk01 = Convert.ToInt32(xmlDataSplit[6]),
+				ntUnk02 = Convert.ToInt32(xmlDataSplit[10]),
+				ntUnk03 = Convert.ToInt32(xmlDataSplit[14])
+			};
+			NetworkTitleReadData.Add(TBA);
+		}
+		NetworkTitleUnlockTblSize = ReadNodes.Count;
+		NetworkTitleUnlockTblHexSize = HexRead.EntryLength("NetworkTitleUnlock")*(NetworkTitleUnlockTblSize*4);
 	}
 
 	public static void ARTitleData()
@@ -660,6 +787,24 @@ public class HexWrite
 					ARTitleWriteData.Add(IntToHex(item.arUnk02));
 					ARTitleWriteData.Add(IntToHex(item.arUnk03));
 					break;
+				case "NetworkTitleUnlock":
+					NetworkTitleWriteData.Add(IntToHex(item.ntID));
+					NetworkTitleWriteData.Add(IntToHex(item.ntUnk01));
+					NetworkTitleWriteData.Add(IntToHex(item.ntUnk02));
+					NetworkTitleWriteData.Add(IntToHex(item.ntUnk03));
+					break;
+				case "GiftTitleUnlock":
+					GiftTitleWriteData.Add(IntToHex(item.gtID));
+					GiftTitleWriteData.Add(IntToHex(item.gtUnk01));
+					GiftTitleWriteData.Add(IntToHex(item.gtUnk02));
+					GiftTitleWriteData.Add(IntToHex(item.gtUnk03));
+					break;
+				case "SystemTitleUnlock":
+					SystemTitleWriteData.Add(IntToHex(item.stID));
+					SystemTitleWriteData.Add(IntToHex(item.stUnk01));
+					SystemTitleWriteData.Add(IntToHex(item.stUnk02));
+					SystemTitleWriteData.Add(IntToHex(item.stUnk03));
+					break;
 				default:
 					Console.WriteLine("Case not found"); 
 					break;
@@ -689,6 +834,9 @@ public class HexWrite
 		RoomTitleUnlockTblOffset = PVTitleUnlockTblOffset + PVTitleUnlockTblHexSize;
 		EditTitleUnlockTblOffset = RoomTitleUnlockTblOffset + RoomTitleUnlockTblHexSize;
 		ARTitleUnlockTblOffset = EditTitleUnlockTblOffset + EditTitleUnlockTblHexSize;
+		NetworkTitleUnlockTblOffset = ARTitleUnlockTblOffset + ARTitleUnlockTblHexSize;
+		GiftTitleUnlockTblOffset = NetworkTitleUnlockTblOffset + NetworkTitleUnlockTblHexSize;
+		SystemTitleUnlockTblOffset = GiftTitleUnlockTblOffset + GiftTitleUnlockTblHexSize;
 
 		intList.Add(ModuleUnlockTblSize);
 		intList.Add(ModuleUnlockTblOffset);
@@ -714,6 +862,12 @@ public class HexWrite
 		intList.Add(EditTitleUnlockTblOffset);
 		intList.Add(ARTitleUnlockTblSize);
 		intList.Add(ARTitleUnlockTblOffset);
+		intList.Add(NetworkTitleUnlockTblSize);
+		intList.Add(NetworkTitleUnlockTblOffset);
+		intList.Add(GiftTitleUnlockTblSize);
+		intList.Add(GiftTitleUnlockTblOffset);
+		intList.Add(SystemTitleUnlockTblSize);
+		intList.Add(SystemTitleUnlockTblOffset);
 
 		foreach (int item in intList)
 		{

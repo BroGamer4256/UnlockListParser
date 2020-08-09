@@ -227,6 +227,33 @@ public struct DataStruct
 						arUnk03 = hex[3]
 					});
 					break;
+				case "NetworkTitleUnlock":
+					DataList.Add(new NetworkTitleUnlock()
+					{
+						ntID = hex[0],
+						ntUnk01 = hex[1],
+						ntUnk02 = hex[2],
+						ntUnk03 = hex[3]
+					});
+					break;
+				case "GiftTitleUnlock":
+					DataList.Add(new GiftTitleUnlock()
+					{
+						gtID = hex[0],
+						gtUnk01 = hex[1],
+						gtUnk02 = hex[2],
+						gtUnk03 = hex[3]
+					});
+					break;
+				case "SystemTitleUnlock":
+					DataList.Add(new SystemTitleUnlock()
+					{
+						stID = hex[0],
+						stUnk01 = hex[1],
+						stUnk02 = hex[2],
+						stUnk03 = hex[3]
+					});
+					break;
 				default: continue;
 			}
 			hex.Clear();
@@ -410,4 +437,28 @@ public struct ARTitleUnlock
 	public int arUnk01 {get; set;}
 	public int arUnk02 {get; set;}
 	public int arUnk03 {get; set;}
+}
+
+public struct NetworkTitleUnlock
+{
+	public int ntID {get; set;}
+	public int ntUnk01 {get; set;}
+	public int ntUnk02 {get; set;}
+	public int ntUnk03 {get; set;}
+}
+
+public struct GiftTitleUnlock
+{
+	public int gtID {get; set;}
+	public int gtUnk01 {get; set;}
+	public int gtUnk02 {get; set;}
+	public int gtUnk03 {get; set;}
+}
+
+public struct SystemTitleUnlock
+{
+	public int stID {get; set;}
+	public int stUnk01 {get; set;}
+	public int stUnk02 {get; set;}
+	public int stUnk03 {get; set;}
 }

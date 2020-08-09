@@ -137,11 +137,11 @@ public class HexRead
 			type = "NetworkTitleUnlock"
 		};
 		offset += 2;
-		var ItemTitleUnlock = new DataStruct() 
+		var GiftTitleUnlock = new DataStruct() 
 		{
 			arrarySize = Convert.ToUInt32(hex[0 + offset], 16), 
 			offsetStart = Convert.ToUInt32(hex[1 + offset], 16),
-			type = "ItemTitleUnlock"
+			type = "GiftTitleUnlock"
 		};
 		offset += 2;
 		var SystemTitleUnlock = new DataStruct() 
@@ -163,6 +163,9 @@ public class HexRead
 		xmlWrite(RoomTitleUnlock.Data(args[0]), RoomTitleUnlock.type);
 		xmlWrite(EditTitleUnlock.Data(args[0]), EditTitleUnlock.type);
 		xmlWrite(ARTitleUnlock.Data(args[0]), ARTitleUnlock.type);
+		xmlWrite(NetworkTitleUnlock.Data(args[0]), NetworkTitleUnlock.type);
+		xmlWrite(GiftTitleUnlock.Data(args[0]), GiftTitleUnlock.type);
+		xmlWrite(SystemTitleUnlock.Data(args[0]), SystemTitleUnlock.type);
 	}
 
 	public static int EntryLength(string Table)
@@ -182,7 +185,7 @@ public class HexRead
 			case "EditTitleUnlock": return 4;
 			case "ARTitleUnlock": return 4;
 			case "NetworkTitleUnlock": return 4;
-			case "ItemTitleUnlock": return 4;
+			case "GiftTitleUnlock": return 4;
 			case "SystemTitleUnlock": return 4;
 			default: return 0;
 		}
